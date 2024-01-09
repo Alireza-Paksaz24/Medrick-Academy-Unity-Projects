@@ -269,6 +269,7 @@ GameObject:
   - component: {fileID: 1502535781}
   - component: {fileID: 1502535780}
   - component: {fileID: 1502535779}
+  - component: {fileID: 1502535783}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -290,13 +291,13 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &1502535780
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -382,14 +383,27 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1502535778}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1502535783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1502535778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dabdc87e1f5ac209905c0e15e1de899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gravity: 0.5
 --- !u!1 &2141548802
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,6 +415,7 @@ GameObject:
   - component: {fileID: 2141548805}
   - component: {fileID: 2141548804}
   - component: {fileID: 2141548803}
+  - component: {fileID: 2141548806}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera

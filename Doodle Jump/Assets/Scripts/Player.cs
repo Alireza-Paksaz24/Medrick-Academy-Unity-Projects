@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (lastPlatformY - this.transform.position.y < 5)
         {
@@ -30,12 +30,32 @@ public class Player : MonoBehaviour
         }
 
         _speed.y -= _gravity;
+        if (Input.GetKey(KeyCode.A))
+            _speed.x = -6;
+        else if (Input.GetKey(KeyCode.D))
+            _speed.x = 6;
+        else
+            _speed.x = 0;
+        if (this.transform.position.x <= -3.33f)
+        {
+            var vector3 = this.transform.position;
+            vector3.x = 3.0f;
+            this.transform.position = vector3;
+        }
+        if (this.transform.position.x >= 2.99f)
+        {
+            var vector3 = this.transform.position;
+            vector3.x = -3.32f;
+            this.transform.position = vector3;
+        }
+
         rb.velocity = _speed;
     }
 
     void Jump()
     {
-        _speed.y = 30;
+        if (_speed.y < 0)
+            _speed.y = 12;
     }
 
     private void OnCollisionEnter2D(Collision2D other)
