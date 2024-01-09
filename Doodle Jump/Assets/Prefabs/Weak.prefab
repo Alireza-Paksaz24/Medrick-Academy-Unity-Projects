@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 4426329465725587698}
   - component: {fileID: 1514364718084147494}
   - component: {fileID: 6892785368871690305}
-  - component: {fileID: 2583150560147556925}
+  - component: {fileID: -5834414646987041372}
   m_Layer: 0
-  m_Name: Normal
-  m_TagString: Normal_Plat
+  m_Name: Weak
+  m_TagString: Weak_Plat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: -520418969
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 1e43b091ad0fd284eaec8a35e4c86acc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3579a8a994688250fbff7acfcb9667c1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -104,7 +104,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.14, y: 0.3}
+    oldSize: {x: 1.2, y: 0.37}
     newSize: {x: 1.14, y: 0.3}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -132,7 +132,7 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
---- !u!114 &2583150560147556925
+--- !u!114 &-5834414646987041372
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
