@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _speed = new Vector2(0,12);
+        _speed = new Vector2(0,20);
         rb = GetComponent<Rigidbody2D>();
         lastPlatformY = _spawnManager.SpawnPlatforms(lastPlatformY, _gameManager.level);
     }

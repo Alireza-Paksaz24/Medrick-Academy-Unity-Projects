@@ -23,7 +23,7 @@ public class Platforms : MonoBehaviour
             Destroy(this.gameObject);
         if (this.tag == "Mover_Plat")
         {
-            this.transform.Translate(Vector3.left * _speed * level / 2);
+            this.transform.Translate(Vector3.left * _speed * level / 8);
             if (this.transform.position.x < -2.1f || this.transform.position.x > 2.1f)
                 _speed *= -1;
         }
@@ -35,7 +35,7 @@ public class Platforms : MonoBehaviour
         {
             this.GetComponent<SpriteRenderer>().sprite = _breakSprite;
             var rb = this.GetComponent<Rigidbody2D>(); 
-            //rb.velocity = Vector2.left * Random.Range(-2,2);
+
             rb.gravityScale = 1;
         }
     }

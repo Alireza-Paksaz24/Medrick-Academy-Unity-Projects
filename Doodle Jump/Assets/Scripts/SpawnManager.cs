@@ -1,7 +1,9 @@
+using TMPro;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
+    [SerializeField] private GameObject _platformContainer;
     [SerializeField] private GameObject[] platformPrefabs;
     [SerializeField] private GameObject fakePlatformPrefab;
     [SerializeField] private float minY = 0.5f;
@@ -16,7 +18,8 @@ public class SpawnManager : MonoBehaviour
         if (minY > 2)
             minY = 2;
         var firstPlatformPosition = new Vector2(Random.Range(-2.0f, 2.1f),firstY);
-        Instantiate(platformPrefabs[0], firstPlatformPosition, Quaternion.identity, transform);
+        var firstPlatformInstantiate = Instantiate(platformPrefabs[0], firstPlatformPosition, Quaternion.identity);
+        firstPlatformInstantiate.transform.parent = _platformContainer.transform;
 
         Vector3 spawnPosition = firstPlatformPosition;
 
@@ -30,7 +33,7 @@ public class SpawnManager : MonoBehaviour
             else
                 platformPrefab = platformPrefabs[1];
             var spawnedPaltform = Instantiate(platformPrefab, spawnPosition, Quaternion.identity);
-            spawnedPaltform.transform.parent = this.transform;
+            spawnedPaltform.transform.parent = _platformContainer.transform;
         }
 
         SpawnFakePlatforms(firstY + 20, level);
@@ -40,8 +43,10 @@ public class SpawnManager : MonoBehaviour
     private float SpawnFakePlatforms(float firstY,int level)
     {
         float numberOfFakePlatforms = numberOfPlatforms * level / 3;
+        Debug.Log(numberOfFakePlatforms);
         var firstPlatformPosition = new Vector2(Random.Range(-2.0f, 2.1f),firstY);
-        Instantiate(fakePlatformPrefab, firstPlatformPosition, Quaternion.identity, transform);
+        var firstPlatformInstantiate = Instantiate(fakePlatformPrefab, firstPlatformPosition, Quaternion.identity);
+        firstPlatformInstantiate.transform.parent = _platformContainer.transform;
 
         Vector3 spawnPosition = firstPlatformPosition;
         
@@ -52,9 +57,15 @@ public class SpawnManager : MonoBehaviour
             spawnPosition.x = Random.Range(-2.0f, 2.1f);
 
             GameObject platformPrefab = platformPrefabs[Random.Range(0, platformPrefabs.Length)];
-            Instantiate(platformPrefab, spawnPosition, Quaternion.identity, transform);
+            var instantiatePlatform = Instantiate(fakePlatformPrefab, spawnPosition, Quaternion.identity);
+            instantiatePlatform.transform.parent = _platformContainer.transform;
         }
 
         return spawnPosition.y;
+    }
+
+    private void SpawnEnemy(float firstY, int level)
+    {
+        
     }
 }
