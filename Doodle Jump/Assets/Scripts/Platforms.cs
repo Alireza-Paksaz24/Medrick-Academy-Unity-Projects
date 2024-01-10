@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +6,8 @@ public class Platforms : MonoBehaviour
 {
     private GameObject _camera;
     private GameManager _gameManager;
-    [SerializeField]private float _speed = 15.0f;
+    [SerializeField] private Sprite _breakSprite;
+    [SerializeField]private float _speed = 0.2f;
     private void Start()
     {
         _camera = GameObject.FindWithTag("MainCamera");
@@ -24,6 +24,17 @@ public class Platforms : MonoBehaviour
             this.transform.Translate(Vector3.left * _speed * _gameManager.level / 2);
             if (this.transform.position.x < -2.0f || this.transform.position.x > 2.0f)
                 _speed *= -1;
+        }
+    }
+
+    public void Break()
+    {
+        if (this.tag == "Weak_Plat")
+        {
+            this.GetComponent<SpriteRenderer>().sprite = _breakSprite;
+            var rb = this.GetComponent<Rigidbody2D>(); 
+            rb.velocity = Vector2.left * Random.Range(-2,2);
+            rb.gravityScale = 1;
         }
     }
 }

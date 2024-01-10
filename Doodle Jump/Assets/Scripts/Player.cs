@@ -61,6 +61,13 @@ public class Player : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == "Platform")
-            Jump();
+        {
+            if (other.gameObject.tag == "Weak_plat")
+            {
+                other.gameObject.GetComponent<Platforms>().Break();
+            }else
+                Jump();
+            
+        }
     }
 }
