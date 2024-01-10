@@ -7,22 +7,24 @@ public class Platforms : MonoBehaviour
 {
     private GameObject _camera;
     private GameManager _gameManager;
-    [SerializeField]private float _speed = 15.0f;
+    private int level;
+    [SerializeField]private float _speed = 0.12f;
     private void Start()
     {
         _camera = GameObject.FindWithTag("MainCamera");
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
+        level = _gameManager.level;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (_camera.transform.position.y - this.transform.position.y > 4.3)
+        if (_camera.transform.position.y - this.transform.position.y > 5)
             Destroy(this.gameObject);
         if (this.tag == "Mover_Plat")
         {
-            this.transform.Translate(Vector3.left * _speed * _gameManager.level / 2);
-            if (this.transform.position.x < -2.0f || this.transform.position.x > 2.0f)
+            this.transform.Translate(Vector3.left * _speed * level / 2);
+            if (this.transform.position.x < -2.1f || this.transform.position.x > 2.1f)
                 _speed *= -1;
         }
     }

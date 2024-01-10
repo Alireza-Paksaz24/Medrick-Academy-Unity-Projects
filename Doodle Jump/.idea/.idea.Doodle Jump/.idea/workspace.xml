@@ -6,13 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="acf77281-6d39-4fcd-86df-3cbb9a90b81a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Doodle Jump/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Doodle Jump/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Mover.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Mover.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Normal.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Normal.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Weak.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Weak.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Camera.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Platforms.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Platforms.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/SpawnManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SpawnManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +102,7 @@
       <workItem from="1704727467781" duration="790000" />
       <workItem from="1704728388634" duration="833000" />
       <workItem from="1704838558166" duration="4000" />
-      <workItem from="1704838634738" duration="2468000" />
+      <workItem from="1704838634738" duration="6710000" />
     </task>
     <servers />
   </component>
@@ -113,5 +113,24 @@
   <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Player.cs</url>
+          <line>63</line>
+          <properties documentPath="C:\Users\apaks\Desktop\Medrick-Academy-Unity-Projects\Doodle Jump\Assets\Scripts\Player.cs" initialLine="63" containingFunctionPresentation="Method 'OnCollisionEnter2D'">
+            <startOffsets>
+              <option value="1760" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1767" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

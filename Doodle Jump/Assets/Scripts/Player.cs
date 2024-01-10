@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _speed = new Vector2(0,0);
+        _speed = new Vector2(0,12);
         rb = GetComponent<Rigidbody2D>();
         lastPlatformY = _spawnManager.SpawnPlatforms(lastPlatformY, _gameManager.level);
     }
@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Platform")
+        if (other.gameObject.tag.Contains("Plat"))
             Jump();
     }
 }
