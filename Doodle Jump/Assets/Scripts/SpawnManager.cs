@@ -43,7 +43,7 @@ public class SpawnManager : MonoBehaviour
             spawnedPaltform.transform.parent = _platformContainer.transform;
         }
 
-        var numberOfEnemies = level - 1;
+        var numberOfEnemies = 3 * (level - 1);
         if (numberOfEnemies > 15)
             numberOfEnemies = 15;
         SpawnEnemy(firstY, numberOfPlatforms, numberOfEnemies);

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -8,14 +9,14 @@ public class Player : MonoBehaviour
     private Vector2 _speed;
     private Rigidbody2D rb;
     private float lastPlatformY = -4;
-    [SerializeField] private float _gravity = 1.0f;
+    [SerializeField] private float _gravity = 0.5f;
     [SerializeField] private SpawnManager _spawnManager;
     [SerializeField] private GameManager _gameManager;
     
     // Start is called before the first frame update
     void Start()
     {
-        _speed = new Vector2(0,20);
+        _speed = new Vector2(0,10);
         rb = GetComponent<Rigidbody2D>();
         lastPlatformY = _spawnManager.SpawnPlatforms(lastPlatformY, _gameManager.level);
     }
@@ -59,7 +60,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag.Contains("Plat") && _speed.y < 0)
+        if (other.gameObject.tag.Contains("Plat") && _speed.y <= 0)
         {
             if (other.gameObject.tag == "Weak_Plat")
             {
@@ -67,7 +68,17 @@ public class Player : MonoBehaviour
                 
             }else
                 Jump();
-            
+        }else if (other.gameObject.tag == "Enemy")
+        {
+            if (other.transform.position.y - this.transform.position.y > -0.9)
+            {
+                Destroy(this.GetComponent<BoxCollider2D>());
+            }
+            else
+            {
+                Destroy(other.gameObject);
+                Jump();
+            }
         }
     }
 }
