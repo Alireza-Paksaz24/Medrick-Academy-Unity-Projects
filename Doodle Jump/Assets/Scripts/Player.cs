@@ -54,13 +54,12 @@ public class Player : MonoBehaviour
 
     void Jump()
     {
-        if (_speed.y < 0)
-            _speed.y = 12;
+        _speed.y = 12;
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag.Contains("Plat"))
+        if (other.gameObject.tag.Contains("Plat") && _speed.y < 0)
         {
             if (other.gameObject.tag == "Weak_Plat")
             {
