@@ -4,8 +4,10 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject _platformContainer;
+    [SerializeField] private GameObject _enemyContainer;
     [SerializeField] private GameObject[] platformPrefabs;
     [SerializeField] private GameObject fakePlatformPrefab;
+    [SerializeField] private GameObject[] enemiesPrefabs;
     [SerializeField] private float minY = 0.5f;
     [SerializeField] private float maxY = 2.5f;
     [SerializeField] private int numberOfPlatforms = 50;
@@ -32,40 +34,42 @@ public class SpawnManager : MonoBehaviour
                 platformPrefab = platformPrefabs[0];
             else
                 platformPrefab = platformPrefabs[1];
+            if (Random.Range(0, 100) > (90 - (level * 3)))
+            {
+                var spawnedFakePaltform = Instantiate(fakePlatformPrefab, spawnPosition + new Vector3(Random.Range(-2.0f, 2.1f),0.5f), Quaternion.identity);
+                spawnedFakePaltform.transform.parent = _platformContainer.transform;
+            }
             var spawnedPaltform = Instantiate(platformPrefab, spawnPosition, Quaternion.identity);
             spawnedPaltform.transform.parent = _platformContainer.transform;
         }
 
-        SpawnFakePlatforms(firstY + 20, level);
+        var numberOfEnemies = level - 1;
+        if (numberOfEnemies > 15)
+            numberOfEnemies = 15;
+        SpawnEnemy(firstY, numberOfPlatforms, numberOfEnemies);
         return spawnPosition.y + minY;
     }
-    
-    private float SpawnFakePlatforms(float firstY,int level)
-    {
-        float numberOfFakePlatforms = numberOfPlatforms * level / 3;
-        Debug.Log(numberOfFakePlatforms);
-        var firstPlatformPosition = new Vector2(Random.Range(-2.0f, 2.1f),firstY);
-        var firstPlatformInstantiate = Instantiate(fakePlatformPrefab, firstPlatformPosition, Quaternion.identity);
-        firstPlatformInstantiate.transform.parent = _platformContainer.transform;
 
-        Vector3 spawnPosition = firstPlatformPosition;
-        
-        for (int i = 1; i < numberOfFakePlatforms - 1; i++)
+    private void SpawnEnemy(float firstY, int numberOfPlats, int numberOfEnemies)
+    {
+        if (numberOfEnemies == 0)
+            return;
+        var mX = maxY * numberOfPlatforms / numberOfEnemies;
+        Vector3 spawnPosition = new Vector2(Random.Range(-2.0f, 2.1f),firstY);;
+        for (int i = 1; i < numberOfEnemies; i++)
         {
-            Debug.Log("Weak platform Created");
-            spawnPosition.y += Random.Range(minY, maxY * 3 / level);
+            spawnPosition.y += Random.Range(3, mX);
             spawnPosition.x = Random.Range(-2.0f, 2.1f);
-
-            GameObject platformPrefab = platformPrefabs[Random.Range(0, platformPrefabs.Length)];
-            var instantiatePlatform = Instantiate(fakePlatformPrefab, spawnPosition, Quaternion.identity);
-            instantiatePlatform.transform.parent = _platformContainer.transform;
+            GameObject enemyPrefab;
+            var enemyType = Random.Range(0, 100);
+            if (enemyType < 80)
+                enemyPrefab = enemiesPrefabs[0];
+            else if (80 <= enemyType && enemyType > 95)
+                enemyPrefab = enemiesPrefabs[1];
+            else
+                enemyPrefab = enemiesPrefabs[2];
+            var spawnedEnemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+            spawnedEnemy.transform.parent = _enemyContainer.transform;
         }
-
-        return spawnPosition.y;
-    }
-
-    private void SpawnEnemy(float firstY, int level)
-    {
-        
     }
 }
