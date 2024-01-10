@@ -33,7 +33,7 @@ public class SpawnManager : MonoBehaviour
             spawnedPaltform.transform.parent = this.transform;
         }
 
-        SpawnFakePlatforms(firstY + 5, level);
+        SpawnFakePlatforms(firstY + 20, level);
         return spawnPosition.y + minY;
     }
     

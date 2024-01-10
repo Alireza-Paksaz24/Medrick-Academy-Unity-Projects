@@ -35,7 +35,7 @@ public class Platforms : MonoBehaviour
         {
             this.GetComponent<SpriteRenderer>().sprite = _breakSprite;
             var rb = this.GetComponent<Rigidbody2D>(); 
-            rb.velocity = Vector2.left * Random.Range(-2,2);
+            //rb.velocity = Vector2.left * Random.Range(-2,2);
             rb.gravityScale = 1;
         }
     }

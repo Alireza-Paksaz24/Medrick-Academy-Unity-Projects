@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.tag.Contains("Plat"))
         {
-            if (other.gameObject.tag == "Weak_plat")
+            if (other.gameObject.tag == "Weak_Plat")
             {
                 other.gameObject.GetComponent<Platforms>().Break();
                 
