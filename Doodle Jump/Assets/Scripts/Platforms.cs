@@ -7,7 +7,7 @@ public class Platforms : MonoBehaviour
     private GameObject _camera;
     private GameManager _gameManager;
     private int level;
-    [SerializeField]private float _speed = 0.2f;
+    [SerializeField]private float _speed = 0.12f;
     [SerializeField] private Sprite _breakSprite;
     private void Start()
     {
