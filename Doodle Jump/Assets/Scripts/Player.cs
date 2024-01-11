@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _speed = new Vector2(0,10);
+        _speed = new Vector2(0,20);
         rb = GetComponent<Rigidbody2D>();
         lastPlatformY = _spawnManager.SpawnPlatforms(lastPlatformY, _gameManager.level);
     }
@@ -74,11 +74,21 @@ public class Player : MonoBehaviour
             {
                 Destroy(this.GetComponent<BoxCollider2D>());
             }
-            else
+            else if (other.gameObject.name.Contains("1"))
             {
                 Destroy(other.gameObject);
                 Jump();
+            }else if (other.gameObject.name.Contains("2"))
+            {
+                Jump();
+                other.gameObject.name = "Enemy1";
             }
         }
+        
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Destroy(this.gameObject);
     }
 }

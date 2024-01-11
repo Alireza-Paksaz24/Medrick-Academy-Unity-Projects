@@ -40,4 +40,10 @@ public class Platforms : MonoBehaviour
             rb.gravityScale = 1;
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Destroy(this.gameObject);
+        Debug.Log("Destroyed");
+    }
 }

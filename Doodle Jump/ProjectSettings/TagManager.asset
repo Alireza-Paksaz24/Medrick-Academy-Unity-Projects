@@ -8,6 +8,7 @@ TagManager:
   - Mover_Plat
   - Undefined
   - Weak_Plat
+  - Enemy
   layers:
   - Default
   - TransparentFX

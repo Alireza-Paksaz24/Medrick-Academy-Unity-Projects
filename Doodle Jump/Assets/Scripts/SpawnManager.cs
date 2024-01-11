@@ -9,8 +9,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject fakePlatformPrefab;
     [SerializeField] private GameObject[] enemiesPrefabs;
     [SerializeField] private float minY = 0.5f;
-    [SerializeField] private float maxY = 2.5f;
-    [SerializeField] private int numberOfPlatforms = 50;
+    [SerializeField] private float maxY = 1.8f;
+    [SerializeField] private int numberOfPlatforms = 40;
     private GameManager _gameManager;
     
     
@@ -19,6 +19,9 @@ public class SpawnManager : MonoBehaviour
         minY = 0.5f + (0.08f *  level); //set minY base on level
         if (minY > 2)
             minY = 2;
+        maxY = 1.8f + (0.08f *  level); //set minx base on level
+        if (maxY > 2)
+            maxY = 2;
         var firstPlatformPosition = new Vector2(Random.Range(-2.0f, 2.1f),firstY);
         var firstPlatformInstantiate = Instantiate(platformPrefabs[0], firstPlatformPosition, Quaternion.identity);
         firstPlatformInstantiate.transform.parent = _platformContainer.transform;
