@@ -68,7 +68,8 @@ public class Player : MonoBehaviour
         float angle = Mathf.Atan2(directionFromPlayerToClick.y, directionFromPlayerToClick.x) * Mathf.Rad2Deg;
         _gun.transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f);
         _gun.SetActive(true);
-        Instantiate(_ball,_gun.transform.position,Quaternion.identity);
+        GameObject bullet = Instantiate(_ball,_gun.transform.position,Quaternion.identity);
+        bullet.GetComponent<Bullet>().SetDirection(directionFromPlayerToClick);
         yield return new WaitForSeconds(0.15f);
         _gun.SetActive(false);
     }
