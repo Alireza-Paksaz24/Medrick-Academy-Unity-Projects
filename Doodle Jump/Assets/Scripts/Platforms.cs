@@ -43,7 +43,10 @@ public class Platforms : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(this.gameObject);
-        Debug.Log("Destroyed");
+        if (other.tag != "Player")
+        {
+            //Destroy(this.gameObject);
+            Debug.Log("Destroyed");
+        }
     }
 }

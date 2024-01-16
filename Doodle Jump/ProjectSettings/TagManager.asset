@@ -6,9 +6,10 @@ TagManager:
   tags:
   - Normal_Plat
   - Mover_Plat
-  - Undefined
   - Weak_Plat
   - Enemy
+  - SpawnManager
+  - Bullet
   layers:
   - Default
   - TransparentFX

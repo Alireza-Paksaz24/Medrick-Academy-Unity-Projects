@@ -19,7 +19,7 @@ public class SpawnManager : MonoBehaviour
         minY = 0.5f + (0.08f *  level); //set minY base on level
         if (minY > 2)
             minY = 2;
-        maxY = 1.8f + (0.08f *  level); //set minx base on level
+        maxY = 1.0f + (0.08f *  level); //set minx base on level
         if (maxY > 2)
             maxY = 2;
         var firstPlatformPosition = new Vector2(Random.Range(-2.0f, 2.1f),firstY);
