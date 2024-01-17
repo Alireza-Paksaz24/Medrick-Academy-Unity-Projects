@@ -27,4 +27,15 @@ public class Enemy : MonoBehaviour
                 _speed *= -1;
         }
     }
+
+    public void Shoot()
+    {
+        if (this.name.Contains("1"))
+        {
+            Destroy(this.gameObject);
+        }else if (this.name.Contains("2"))
+        {
+            this.name = "Enemy1";
+        }
+    }
 }
