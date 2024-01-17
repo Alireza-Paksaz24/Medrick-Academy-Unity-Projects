@@ -50,6 +50,11 @@ public class Player : MonoBehaviour
             lastPlatformY = _spawnManager.SpawnPlatforms(lastPlatformY, _gameManager.level);
         }
         rb.velocity = Move();
+
+    }
+
+    private void Update()
+    {
         if (Input.GetMouseButtonDown(0))
         {
             if ((Time.time - _lastFire) >= _fireRate)
@@ -70,7 +75,10 @@ public class Player : MonoBehaviour
         _gun.SetActive(true);
         GameObject bullet = Instantiate(_ball,_gun.transform.position,Quaternion.identity);
         bullet.GetComponent<Bullet>().SetDirection(directionFromPlayerToClick);
+        var currentSprite = _sprite.sprite;
+        _sprite.sprite = _sprites[2];
         yield return new WaitForSeconds(0.15f);
+        _sprite.sprite = currentSprite;
         _gun.SetActive(false);
     }
     Vector2 Move()
