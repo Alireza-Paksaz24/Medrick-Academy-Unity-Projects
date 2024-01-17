@@ -9,9 +9,9 @@ public class Border : MonoBehaviour
     // Start is called before the first frame update
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag.Contains("Plat") && this.name == "Top")
+        if (other.gameObject.tag.Contains("Plat") && this.name == "Top")
             return;
-        if (!other.CompareTag("Player"))
+        if (!other.gameObject.CompareTag("Player"))
         {
             Destroy(other.gameObject);
         }

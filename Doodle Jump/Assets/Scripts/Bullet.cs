@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -24,12 +25,18 @@ public class Bullet : MonoBehaviour
         transform.Translate(direction * _speed);
     }
 
+
     private void OnTriggerEnter2D(Collider2D other)
+    {
+        DestroyEnemy(other.gameObject);
+    }
+
+    void DestroyEnemy(GameObject other)
     {
         if (other.CompareTag("Enemy"))
         {
-            Destroy(other.gameObject);
-            Destroy(this);
+            Destroy(other);
+            Destroy(this.gameObject);
         }
     }
 }
