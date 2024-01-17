@@ -6,14 +6,13 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField]
     private float _speed;
 
     private Vector2 direction;
     private void Start()
     {
         this.transform.parent = GameObject.FindWithTag("SpawnManager").transform;
-        // _speed = 50;
+        _speed = 1.5f;
     }
 
     public void SetDirection(Vector2 dir)

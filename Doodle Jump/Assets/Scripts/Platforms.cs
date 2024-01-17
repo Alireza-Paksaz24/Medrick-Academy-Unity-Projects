@@ -40,13 +40,12 @@ public class Platforms : MonoBehaviour
             rb.gravityScale = 1;
         }
     }
-
-    private void OnTriggerEnter(Collider other)
+    
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.tag != "Player")
+        if (other.gameObject.tag != "Player")
         {
-            //Destroy(this.gameObject);
-            Debug.Log("Destroyed");
+            Destroy(this.gameObject);
         }
     }
 }
