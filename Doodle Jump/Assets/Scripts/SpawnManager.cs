@@ -33,11 +33,11 @@ public class SpawnManager : MonoBehaviour
             spawnPosition.y += Random.Range(minY, maxY);
             spawnPosition.x = Random.Range(-2.0f, 2.1f);
             GameObject platformPrefab;
-            if (Random.Range(0, 100) < (90 - (level * 5)))
+            if (Random.Range(0, 100) < (90 - (level * 2)))
                 platformPrefab = platformPrefabs[0];
             else
                 platformPrefab = platformPrefabs[1];
-            if (Random.Range(0, 100) > (90 - (level * 3)))
+            if (Random.Range(0, 100) > (90 - (level * 2)))
             {
                 var spawnedFakePaltform = Instantiate(fakePlatformPrefab, spawnPosition + new Vector3(Random.Range(-2.0f, 2.1f),0.5f), Quaternion.identity);
                 spawnedFakePaltform.transform.parent = _platformContainer.transform;
