@@ -36,7 +36,7 @@ public class Camera : MonoBehaviour
             // When the game ends, move the camera downwards
             transform.position =  new Vector3(transform.position.x, _player.position.y + posi, transform.position.z);
             posi -= 0.02f;
-            Destroy(_player,3.0f);
+            Destroy(_player.gameObject,3.0f);
         }
     }
 
