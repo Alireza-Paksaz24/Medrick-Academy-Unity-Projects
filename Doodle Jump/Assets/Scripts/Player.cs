@@ -8,24 +8,29 @@ public class Player : MonoBehaviour
 {
     private Vector2 _speed;
     private Rigidbody2D rb;
-    private float lastPlatformY = -10;
-    private float _gravity = 0.5f;
+    private float lastPlatformY;
+    private float _gravity;
     private SpawnManager _spawnManager;
     private GameManager _gameManager;
     private SpriteRenderer _sprite;
     private float _lastFire;
     private float _fireRate;
+    private bool _shrink;
     
     [SerializeField] private Sprite[] _sprites;
     [SerializeField] private GameObject _gun;
     [SerializeField] private GameObject _ball;
     
+
     // Start is called before the first frame update
     void Start()
     {
+        lastPlatformY = -10;
+        _gravity = 0.5f;
+        _shrink = false;
         _lastFire = 0.0f;
         _fireRate = 0.15f;
-        _speed = new Vector2(0,20);
+        _speed = new Vector2(0,30);
         rb = GetComponent<Rigidbody2D>();
         _gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
         _spawnManager = GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>();
@@ -49,7 +54,19 @@ public class Player : MonoBehaviour
             _gameManager.level++;
             lastPlatformY = _spawnManager.SpawnPlatforms(lastPlatformY, _gameManager.level);
         }
-        rb.velocity = Move();
+        
+
+        if (_shrink)
+        {
+            this.transform.localScale = this.transform.localScale - new Vector3(0.02f, 0.02f,0.01f);
+            rb.velocity = _speed;
+            if (this.transform.localScale.x < 0.1f)
+            {
+                _shrink = false;
+                _speed = Vector2.zero;
+            }
+        }else
+            rb.velocity = Move();
 
     }
 
@@ -127,22 +144,40 @@ public class Player : MonoBehaviour
                 Jump();
         }else if (other.gameObject.tag == "Enemy")
         {
-            if (other.transform.position.y - this.transform.position.y > -0.9)
+            // Player behaviour when collition with enemy
+            if ((other.transform.position.y - this.transform.position.y > -0.9) && !this.gameObject.name.Contains("3"))
             {
-                Destroy(this.GetComponent<BoxCollider2D>());
+                this.GetComponent<BoxCollider2D>().isTrigger = true;
             }
             else if (!other.gameObject.name.Contains("3"))
             {
                 other.gameObject.GetComponent<Enemy>().Shoot();
                 Jump();
             }
+            // // Player behaviour when falls to hole
+            // if (other.gameObject.name.Contains("3"))
+            // {
+            //     this.FallIntoHole(other.transform.position - this.transform.position);
+            // }
         }
         
     }
 
+    void FallIntoHole(Vector2 direction)
+    {
+        _speed = direction.normalized;
+        _gravity = 0;
+        _shrink = true;
+    }
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Enemy")
-            Destroy(this.gameObject);
+        if (other.gameObject.name.Contains("Enemy3"))
+            this.FallIntoHole(other.transform.position - this.transform.position);
+    }
+
+    public void NoGravity()
+    {
+        _gravity = 0;
     }
 }
