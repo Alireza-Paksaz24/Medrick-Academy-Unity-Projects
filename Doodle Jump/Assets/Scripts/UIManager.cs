@@ -8,7 +8,8 @@ public class UIManager : MonoBehaviour
     private TextMeshProUGUI _score;
     private float _lastPosition;
     private Vector2 _playerVelocity;
-    
+
+    [SerializeField] private GameObject _pausePanel;
     [SerializeField] private GameObject _player;
     
     
@@ -38,11 +39,14 @@ public class UIManager : MonoBehaviour
         {
             _playerVelocity = new Vector2(_velocity.x,_velocity.y);
             _velocity = Vector2.zero;
+            _pausePanel.SetActive(true);
         }
         else
         {
             _velocity = _playerVelocity;
             _playerVelocity = new Vector2(-100, -100);
+            _pausePanel.SetActive(false);
+
         }
 
         _player.GetComponent<Rigidbody2D>().velocity = _velocity;
