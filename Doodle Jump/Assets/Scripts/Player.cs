@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public bool puase = false;
+    
     private Vector2 _speed;
     private Rigidbody2D rb;
     private float lastPlatformY;
@@ -16,6 +18,7 @@ public class Player : MonoBehaviour
     private float _lastFire;
     private float _fireRate;
     private bool _shrink;
+    
     
     [SerializeField] private Sprite[] _sprites;
     [SerializeField] private GameObject _gun;
@@ -65,27 +68,38 @@ public class Player : MonoBehaviour
                 _shrink = false;
                 _speed = Vector2.zero;
             }
-        }else
+        }
+        else if (!puase)
             rb.velocity = Move();
 
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !puase)
         {
             if ((Time.time - _lastFire) >= _fireRate)
             {
                 _lastFire = Time.time;
-                StartCoroutine(Fire());
+                StartCoroutine(Fire(UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition)));
+            }
+        }
+        if (Input.GetKey(KeyCode.Space))
+        {
+            if ((Time.time - _lastFire) >= _fireRate)
+            {
+                _lastFire = Time.time;
+                StartCoroutine(Fire(new Vector3(this.transform.position.x,this.transform.position.y + 10,0)));
             }
         }
     }
 
-    IEnumerator Fire()
+    IEnumerator Fire(Vector3 posi)
     {
         // I hvae No idea what I've done
-        var currentMousePosi = UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (posi.y - this.transform.position.y < 0)
+            posi -=  (this.transform.position);
+        var currentMousePosi = posi;
         var directionFromPlayerToClick = (currentMousePosi - this.transform.position).normalized;
         float angle = Mathf.Atan2(directionFromPlayerToClick.y, directionFromPlayerToClick.x) * Mathf.Rad2Deg;
         _gun.transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f);
@@ -99,7 +113,7 @@ public class Player : MonoBehaviour
         _gun.SetActive(false);
     }
     Vector2 Move()
-    {        
+    {
         _speed.y -= _gravity;
         if (Input.GetKey(KeyCode.A))
             _speed.x = -6;
@@ -154,11 +168,6 @@ public class Player : MonoBehaviour
                 other.gameObject.GetComponent<Enemy>().Shoot();
                 Jump();
             }
-            // // Player behaviour when falls to hole
-            // if (other.gameObject.name.Contains("3"))
-            // {
-            //     this.FallIntoHole(other.transform.position - this.transform.position);
-            // }
         }
         
     }
