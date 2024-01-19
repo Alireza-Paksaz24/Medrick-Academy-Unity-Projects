@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Camera : MonoBehaviour
 {
+    [SerializeField] private GameObject _gameOver;
     [SerializeField] private Transform _player; // Reference to the player's transform
     private float lastYPosition; // To track the last highest Y position of the player
     private float _stopYPosition;
@@ -44,5 +45,6 @@ public class Camera : MonoBehaviour
     {
         _gameEnded = true;
         _stopYPosition = lastYPosition - 30;
+        _gameOver.GetComponent<GameOver>().ActiveGameOver(lastYPosition);
     }
 }

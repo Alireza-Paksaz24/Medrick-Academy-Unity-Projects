@@ -8,6 +8,7 @@ using UnityEngine;
 public class Border : MonoBehaviour
 {
     private bool _flag = false;
+    
     // Start is called before the first frame update
     private void OnTriggerExit2D(Collider2D other)
     {

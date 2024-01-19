@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d71af0d32959ab84085f5572a87f0f09
+guid: 66122d8d3ea089f41b9b22a305adefcf
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Shabnam FD
+  - Mj_Old
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
