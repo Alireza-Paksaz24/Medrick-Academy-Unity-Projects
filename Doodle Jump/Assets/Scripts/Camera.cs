@@ -12,29 +12,25 @@ public class Camera : MonoBehaviour
 
     void Start()
     {
-        // Initialize the last Y position to the player's current Y position
         lastYPosition = _player.position.y;
         _gameEnded = false;
     }
 
     void Update()
     {
+        if (_player == null)
+            _player = GameObject.Find("GameOver").GetComponent<Transform>();
         if (!_gameEnded)
         {
-            // Check if the player has moved up
             if (_player.position.y > lastYPosition)
             {
-                // Update camera position to follow player's Y position, keeping X and Z constant
                 transform.position = new Vector3(transform.position.x, _player.position.y, transform.position.z);
                 
-                // Update the last Y position to the player's current Y position
                 lastYPosition = _player.position.y;
             }
-            // If the player moves down, do not update the camera position
         }
         else if (_stopYPosition < _player.position.y)
         {
-            // When the game ends, move the camera downwards
             transform.position =  new Vector3(transform.position.x, _player.position.y + posi, transform.position.z);
             posi -= 0.02f;
             Destroy(_player.gameObject,3.0f);

@@ -1,8 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Border : MonoBehaviour
@@ -18,9 +13,9 @@ public class Border : MonoBehaviour
         }else if (Time.time > 0.5f)
         {
             GameObject.FindWithTag("MainCamera").GetComponent<Camera>().GameEnded();
-            GetComponent<Player>().NoGravity();
+            var player = GetComponent<Player>();
+            if (player != null)
+                player.NoGravity();
         }
-
-        Debug.Log(other.name);
     }
 }

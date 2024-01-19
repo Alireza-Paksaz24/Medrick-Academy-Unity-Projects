@@ -1,7 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -67,6 +64,10 @@ public class Player : MonoBehaviour
             {
                 _shrink = false;
                 _speed = Vector2.zero;
+                var _camera = GameObject.FindWithTag("MainCamera");
+                _camera.GetComponent<Camera>().GameEnded();
+                _camera.transform.position = new Vector3(_camera.transform.position.x, _camera.transform.position.y - 29, -0.5f);
+                Destroy(this.gameObject);
             }
         }
         else if (!puase)
