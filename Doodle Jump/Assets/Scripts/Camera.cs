@@ -29,7 +29,7 @@ public class Camera : MonoBehaviour
                 lastYPosition = _player.position.y;
             }
         }
-        else if (_stopYPosition < _player.position.y)
+        else if (_stopYPosition < this.transform.position.y)
         {
             transform.position =  new Vector3(transform.position.x, _player.position.y + posi, transform.position.z);
             posi -= 0.02f;

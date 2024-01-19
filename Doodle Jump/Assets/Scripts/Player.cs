@@ -42,6 +42,10 @@ public class Player : MonoBehaviour
             Debug.LogError("Spawn Manager is null");
         if (_sprite == null)
             Debug.LogError("Sprite Render in Player is null");
+
+#if UNITY_ANDROID
+        Input.gyro.enabled = true;
+#endif
     }
 
 
@@ -66,7 +70,7 @@ public class Player : MonoBehaviour
                 _speed = Vector2.zero;
                 var _camera = GameObject.FindWithTag("MainCamera");
                 _camera.GetComponent<Camera>().GameEnded();
-                _camera.transform.position = new Vector3(_camera.transform.position.x, _camera.transform.position.y - 29, -0.5f);
+                _camera.transform.position = new Vector3(_camera.transform.position.x, _camera.transform.position.y - 30, -0.5f);
                 Destroy(this.gameObject);
             }
         }
@@ -85,6 +89,7 @@ public class Player : MonoBehaviour
                 StartCoroutine(Fire(UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition)));
             }
         }
+
         if (Input.GetKey(KeyCode.Space))
         {
             if ((Time.time - _lastFire) >= _fireRate)
@@ -118,12 +123,16 @@ public class Player : MonoBehaviour
     Vector2 Move()
     {
         _speed.y -= _gravity;
+#if UNITY_ANDROID
+        _speed.x = 15.0f * Input.gyro.gravity.x;
+#else
         if (Input.GetKey(KeyCode.A))
             _speed.x = -6;
         else if (Input.GetKey(KeyCode.D))
             _speed.x = 6;
         else
             _speed.x = 0;
+#endif
         if (_sprite.sprite != _sprites[0] && _speed.x < 0)
             _sprite.sprite = _sprites[0];
         else if (_sprite.sprite != _sprites[1] && _speed.x > 0)

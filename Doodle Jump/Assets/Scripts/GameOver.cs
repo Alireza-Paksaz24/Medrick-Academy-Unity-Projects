@@ -12,11 +12,16 @@ public class GameOver : MonoBehaviour
         var str = Convert.ToString(Convert.ToInt32(posi)) +" = "+ "ﺯﺎﯿﺘﻣﺍ";
         _gameOverInfoText.text = str;
         this.gameObject.SetActive(true);
-        this.transform.position = new Vector3(0.2f,posi-32 ,0);
+        this.transform.position = new Vector3(0.2f,posi-30 ,0);
     }
 
     public void OnRestartButton()
     {
         SceneManager.LoadScene("Scenes/Game");
+    }
+
+    public void OnMenuButton()
+    {
+        SceneManager.LoadScene("Start");
     }
 }
