@@ -45,7 +45,7 @@ public class Platforms : MonoBehaviour
     {
         if (other.gameObject.tag != "Player")
         {
-            // Destroy(this.gameObject);
+            Destroy(this.gameObject);
         }
     }
 }

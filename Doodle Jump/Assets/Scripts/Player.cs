@@ -98,7 +98,7 @@ public class Player : MonoBehaviour
     {
         // I hvae No idea what I've done
         if (posi.y - this.transform.position.y < 0)
-            posi -=  (this.transform.position);
+            posi -= -2.0f * (this.transform.position - posi);
         var currentMousePosi = posi;
         var directionFromPlayerToClick = (currentMousePosi - this.transform.position).normalized;
         float angle = Mathf.Atan2(directionFromPlayerToClick.y, directionFromPlayerToClick.x) * Mathf.Rad2Deg;
@@ -109,6 +109,8 @@ public class Player : MonoBehaviour
         var currentSprite = _sprite.sprite;
         _sprite.sprite = _sprites[2];
         yield return new WaitForSeconds(0.15f);
+        if (currentSprite == _sprites[2])
+            currentSprite = _sprites[1];
         _sprite.sprite = currentSprite;
         _gun.SetActive(false);
     }

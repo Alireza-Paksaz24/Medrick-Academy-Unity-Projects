@@ -18,6 +18,8 @@ public class Bullet : MonoBehaviour
     public void SetDirection(Vector2 dir)
     {
         this.direction = dir;
+        if (direction.x < 0.2 && direction.y < 0.2)
+            direction *= 2.5f;
     }
     void FixedUpdate()
     {
