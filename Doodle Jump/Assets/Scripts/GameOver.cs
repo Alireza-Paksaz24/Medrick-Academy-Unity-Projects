@@ -7,12 +7,21 @@ public class GameOver : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI _gameOverInfoText;
+
+    private GameObject _player;
+
+    private void Start()
+    {
+        _player = GameObject.FindWithTag("Player");
+    }
+
     public void ActiveGameOver(float posi)
     {
-        var str = Convert.ToString(Convert.ToInt32(posi)) +" = "+ "ﺯﺎﯿﺘﻣﺍ";
+        var str = Convert.ToString(Convert.ToInt32(posi * 100)) +" = "+ "ﺯﺎﯿﺘﻣﺍ";
         _gameOverInfoText.text = str;
         this.gameObject.SetActive(true);
         this.transform.position = new Vector3(0.2f,posi-30 ,0);
+        SaveToDB();
     }
 
     public void OnRestartButton()
@@ -23,5 +32,10 @@ public class GameOver : MonoBehaviour
     public void OnMenuButton()
     {
         SceneManager.LoadScene("Start");
+    }
+
+    void SaveToDB()
+    {
+        // PlayerPrefs.SetString();
     }
 }
