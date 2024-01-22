@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="acf77281-6d39-4fcd-86df-3cbb9a90b81a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Doodle Jump/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Doodle Jump/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameOver.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameOver.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UIManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +20,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Border.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Camera.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameOver.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Login_Scripts/Canvas.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Platforms.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Start_Scripts/Start.cs" root0="FORCE_HIGHLIGHTING" />
@@ -143,6 +142,7 @@
       <workItem from="1705659022555" duration="350000" />
       <workItem from="1705672912714" duration="4389000" />
       <workItem from="1705679107108" duration="7118000" />
+      <workItem from="1705912953364" duration="1133000" />
     </task>
     <servers />
   </component>
