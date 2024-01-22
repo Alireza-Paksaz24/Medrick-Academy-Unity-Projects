@@ -10,6 +10,6 @@ public class Start : MonoBehaviour
 
     public void OnLeader()
     {
-        Debug.Log("Press");
+        Debug.Log(PlayerData.username);
     }
 }
