@@ -10,6 +10,8 @@ public class Start : MonoBehaviour
 
     public void OnLeader()
     {
-        Debug.Log(PlayerData.username);
+        var a = (string[]) StaticValue.topPlayer[0];
+        Debug.Log(a);
+        Debug.Log(a[0]);
     }
 }

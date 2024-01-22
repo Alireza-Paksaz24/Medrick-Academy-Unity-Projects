@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="acf77281-6d39-4fcd-86df-3cbb9a90b81a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Doodle Jump/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Doodle Jump/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Camera.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Camera.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Login_Scripts/Canvas.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Login_Scripts/Canvas.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +145,7 @@
       <workItem from="1705659022555" duration="350000" />
       <workItem from="1705672912714" duration="4389000" />
       <workItem from="1705679107108" duration="7118000" />
-      <workItem from="1705912953364" duration="1133000" />
+      <workItem from="1705912953364" duration="5353000" />
     </task>
     <servers />
   </component>
@@ -153,5 +156,42 @@
   <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/GameManager.cs</url>
+          <line>61</line>
+          <properties documentPath="C:\Users\apaks\Desktop\Medrick-Academy-Unity-Projects\Doodle Jump\Assets\Scripts\GameManager.cs" initialLine="61" containingFunctionPresentation="Method 'AddNewPlayer'">
+            <startOffsets>
+              <option value="2000" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2030" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/GameManager.cs</url>
+          <line>53</line>
+          <properties documentPath="C:\Users\apaks\Desktop\Medrick-Academy-Unity-Projects\Doodle Jump\Assets\Scripts\GameManager.cs" initialLine="53" containingFunctionPresentation="Method 'AddNewPlayer'">
+            <startOffsets>
+              <option value="1672" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1733" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="Frame#GameManager.AddNewPlayer" memberName="newUsername" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
 </project>
