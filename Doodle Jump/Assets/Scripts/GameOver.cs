@@ -21,7 +21,7 @@ public class GameOver : MonoBehaviour
         _gameOverInfoText.text = str;
         this.gameObject.SetActive(true);
         this.transform.position = new Vector3(0.2f,posi-30 ,0);
-        SaveToDB();
+        SaveToDB(Convert.ToInt32(posi * 100));
     }
 
     public void OnRestartButton()
@@ -34,8 +34,8 @@ public class GameOver : MonoBehaviour
         SceneManager.LoadScene("Start");
     }
 
-    void SaveToDB()
+    void SaveToDB(int score)
     {
-        // PlayerPrefs.SetString();
+        GameObject.Find("Game_Manager").GetComponent<GameManager>().AddNewPlayer(StaticValue.username, score);
     }
 }

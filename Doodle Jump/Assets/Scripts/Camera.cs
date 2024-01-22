@@ -44,6 +44,8 @@ public class Camera : MonoBehaviour
         _gameEnded = true;
         _stopYPosition = lastYPosition - 30;
         _gameOver.GetComponent<GameOver>().ActiveGameOver(lastYPosition);
-        GameObject.Find("Game_Manager").GetComponent<GameManager>().AddNewPlayer(StaticValue.username, Convert.ToInt32(lastYPosition * 100));
     }
+    
+
+
 }
