@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
@@ -16,12 +15,12 @@ public class SpawnManager : MonoBehaviour
     
     public float SpawnPlatforms(float firstY,int level)
     {
-        minY = 0.5f + (0.08f *  level); //set minY base on level
+        minY = 0.2f + (0.08f *  level); //set minY base on level
         if (minY > 2)
             minY = 2;
         maxY = 1.0f + (0.08f *  level); //set minx base on level
-        if (maxY > 2)
-            maxY = 2;
+        if (maxY > 2.3f)
+            maxY = 2.3f;
         var firstPlatformPosition = new Vector2(Random.Range(-2.0f, 2.1f),firstY);
         var firstPlatformInstantiate = Instantiate(platformPrefabs[0], firstPlatformPosition, Quaternion.identity);
         firstPlatformInstantiate.transform.parent = _platformContainer.transform;
@@ -33,7 +32,7 @@ public class SpawnManager : MonoBehaviour
             spawnPosition.y += Random.Range(minY, maxY);
             spawnPosition.x = Random.Range(-2.0f, 2.1f);
             GameObject platformPrefab;
-            if (Random.Range(0, 100) < (90 - (level * 2)))
+            if (Random.Range(0, 100) < (100 - (level * 2)))
                 platformPrefab = platformPrefabs[0];
             else
                 platformPrefab = platformPrefabs[1];

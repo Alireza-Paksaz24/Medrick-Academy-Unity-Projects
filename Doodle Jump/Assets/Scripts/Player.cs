@@ -26,11 +26,11 @@ public class Player : MonoBehaviour
     void Start()
     {
         lastPlatformY = -10;
-        _gravity = 0.5f;
+        _gravity = 0.2f;
         _shrink = false;
         _lastFire = 0.0f;
         _fireRate = 0.15f;
-        _speed = new Vector2(0,30);
+        _speed = new Vector2(0,0);
         rb = GetComponent<Rigidbody2D>();
         _gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
         _spawnManager = GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>();
@@ -124,7 +124,7 @@ public class Player : MonoBehaviour
     {
         _speed.y -= _gravity;
 #if UNITY_ANDROID
-        _speed.x = 15.0f * Input.gyro.gravity.x;
+        _speed.x = 6.0f * Input.gyro.gravity.x;
 #else
         if (Input.GetKey(KeyCode.A))
             _speed.x = -6;
@@ -155,7 +155,7 @@ public class Player : MonoBehaviour
     
     void Jump()
     {
-        _speed.y = 12;
+        _speed.y = 6;
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -171,7 +171,7 @@ public class Player : MonoBehaviour
         }else if (other.gameObject.tag == "Enemy")
         {
             // Player behaviour when collition with enemy
-            if ((other.transform.position.y - this.transform.position.y > -0.9) && !this.gameObject.name.Contains("3"))
+            if ((other.transform.position.y - this.transform.position.y > -0.45f) && !this.gameObject.name.Contains("3"))
             {
                 this.GetComponent<BoxCollider2D>().isTrigger = true;
             }
