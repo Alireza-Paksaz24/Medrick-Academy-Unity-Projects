@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
         if (_lastPosition < _cameraLastPosition.position.y)
         {
             _lastPosition = _cameraLastPosition.position.y;
-            var scoreString =Convert.ToString(Convert.ToInt32(_lastPosition)) +" = "+ "ﺯﺎﯿﺘﻣﺍ";
+            var scoreString =Convert.ToString(Convert.ToInt32(_lastPosition * 100)) +" = "+ "ﺯﺎﯿﺘﻣﺍ";
             _score.text = scoreString;
         }
     }

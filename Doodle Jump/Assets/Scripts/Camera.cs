@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Camera : MonoBehaviour
@@ -43,4 +45,7 @@ public class Camera : MonoBehaviour
         _stopYPosition = lastYPosition - 30;
         _gameOver.GetComponent<GameOver>().ActiveGameOver(lastYPosition);
     }
+    
+
+
 }
