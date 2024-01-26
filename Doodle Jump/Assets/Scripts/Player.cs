@@ -11,11 +11,11 @@ public class Player : MonoBehaviour
     private float _gravity;
     private SpawnManager _spawnManager;
     private GameManager _gameManager;
+    private AudioSource _audioManager;
     private SpriteRenderer _sprite;
     private float _lastFire;
     private float _fireRate;
     private bool _shrink;
-    
     
     [SerializeField] private Sprite[] _sprites;
     [SerializeField] private GameObject _gun;
@@ -30,18 +30,21 @@ public class Player : MonoBehaviour
         _shrink = false;
         _lastFire = 0.0f;
         _fireRate = 0.15f;
-        _speed = new Vector2(0,0);
+        _speed = new Vector2(0,10);
         rb = GetComponent<Rigidbody2D>();
         _gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
         _spawnManager = GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>();
         lastPlatformY = _spawnManager.SpawnPlatforms(lastPlatformY, _gameManager.level);
-        _sprite = GetComponent<SpriteRenderer>();   
+        _sprite = GetComponent<SpriteRenderer>();
+        _audioManager = GameObject.FindWithTag("Audio").GetComponent<AudioSource>();
         if (_gameManager == null)
             Debug.LogError("Game Manager is null");
         if (_spawnManager == null)
             Debug.LogError("Spawn Manager is null");
         if (_sprite == null)
             Debug.LogError("Sprite Render in Player is null");
+        if (_audioManager == null)
+            Debug.LogError("Audio Source is null");
 
 #if UNITY_ANDROID
         Input.gyro.enabled = true;
@@ -119,6 +122,7 @@ public class Player : MonoBehaviour
             currentSprite = _sprites[1];
         _sprite.sprite = currentSprite;
         _gun.SetActive(false);
+        PlayAudio(6);
     }
     Vector2 Move()
     {
@@ -156,6 +160,7 @@ public class Player : MonoBehaviour
     void Jump()
     {
         _speed.y = 6;
+        PlayAudio(4);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -165,7 +170,7 @@ public class Player : MonoBehaviour
             if (other.gameObject.tag == "Weak_Plat")
             {
                 other.gameObject.GetComponent<Platforms>().Break();
-                
+                PlayAudio(0);
             }else
                 Jump();
         }else if (other.gameObject.tag == "Enemy")
@@ -174,11 +179,13 @@ public class Player : MonoBehaviour
             if ((other.transform.position.y - this.transform.position.y > -0.45f) && !this.gameObject.name.Contains("3"))
             {
                 this.GetComponent<BoxCollider2D>().isTrigger = true;
+                PlayAudio(3);
             }
             else if (!other.gameObject.name.Contains("3"))
             {
                 other.gameObject.GetComponent<Enemy>().Shoot();
-                Jump();
+                PlayAudio(5);
+                _speed.y = 8;
             }
         }
         
@@ -189,6 +196,7 @@ public class Player : MonoBehaviour
         _speed = direction.normalized;
         _gravity = 0;
         _shrink = true;
+        PlayAudio(2);
     }
     
     private void OnTriggerEnter2D(Collider2D other)
@@ -200,5 +208,11 @@ public class Player : MonoBehaviour
     public void NoGravity()
     {
         _gravity = 0;
+    }
+
+    public void PlayAudio(int num)
+    {
+        _audioManager.GetComponent<AudioManager>().SetAudio(num);
+        _audioManager.Play();
     }
 }

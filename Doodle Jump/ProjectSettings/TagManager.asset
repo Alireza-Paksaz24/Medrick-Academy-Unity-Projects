@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - SpawnManager
   - Bullet
+  - Audio
   layers:
   - Default
   - TransparentFX

@@ -14,9 +14,13 @@ public class Border : MonoBehaviour
         {
             _flag = false;
             GameObject.FindWithTag("MainCamera").GetComponent<Camera>().GameEnded();
-            var player = GetComponent<Player>();
+            var player = other.GetComponent<Player>();
+            player.PlayAudio(1);
             if (player != null)
+            {
                 player.NoGravity();
+                
+            }
         }
     }
 }
