@@ -709,7 +709,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 567666390}
         m_TargetAssemblyTypeName: Start, Assembly-CSharp
         m_MethodName: OnLeader
         m_Mode: 1
@@ -842,7 +842,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 567666390}
         m_TargetAssemblyTypeName: Start, Assembly-CSharp
         m_MethodName: OnPlayButtonPressed
         m_Mode: 1

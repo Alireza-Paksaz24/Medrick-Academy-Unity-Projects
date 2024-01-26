@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LeaderBoard : MonoBehaviour
 {
@@ -10,18 +9,18 @@ public class LeaderBoard : MonoBehaviour
     private GameObject _content;
     void Start()
     {
-        var arrayOfTopPlayer = (string[]) StaticValue.topPlayer[0];
-        foreach (var player in arrayOfTopPlayer)
+        
+        foreach (var _player in StaticValue.topPlayer)
         {
+            var player = (string [])_player;
             var recordScreen = Instantiate(_userRecordPanel);
             recordScreen.GetComponent<UserRecord>().Setrecord(player[0],player[1]);
             recordScreen.transform.parent = _content.transform;
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnMenuButtonPressed()
     {
-        
+        SceneManager.LoadScene("Scenes/Start");
     }
 }

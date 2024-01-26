@@ -10,6 +10,7 @@ public class Start : MonoBehaviour
 
     public void OnLeader()
     {
+        SceneManager.LoadScene("Scenes/LeaderBoard");
         var a = (string[]) StaticValue.topPlayer[0];
         Debug.Log(a);
         Debug.Log(a[0]);
