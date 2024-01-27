@@ -11,8 +11,16 @@ public class Start : MonoBehaviour
     public void OnLeader()
     {
         SceneManager.LoadScene("Scenes/LeaderBoard");
-        var a = (string[]) StaticValue.topPlayer[0];
-        Debug.Log(a);
-        Debug.Log(a[0]);
     }
+
+    public void OnLogout()
+    {
+        SceneManager.LoadScene("Scenes/Login");
+    }
+    
+    public void OnStore()
+    {
+        SceneManager.LoadScene("Scenes/Store");
+    }
+    
 }
