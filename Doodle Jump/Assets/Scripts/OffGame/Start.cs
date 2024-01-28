@@ -22,5 +22,4 @@ public class Start : MonoBehaviour
     {
         SceneManager.LoadScene("Scenes/Store");
     }
-    
 }

@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour {
 
         string updatedJson = JsonUtility.ToJson(playerDataList);
         PlayerPrefs.SetString("PlayersJson", updatedJson);
-
+        PlayerPrefs.SetInt(StaticValue.username,StaticValue.playerBalance);
         UpdateTopPlayersList();
     }
 

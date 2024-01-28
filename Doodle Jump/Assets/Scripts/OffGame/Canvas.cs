@@ -6,6 +6,7 @@ public class Canvas : MonoBehaviour
 {
     public void OnDonePress()
     {
+        StaticValue.playerBalance = PlayerPrefs.GetInt(StaticValue.username, 0);
         SceneManager.LoadScene("Scenes/Start");
     }
 
@@ -18,4 +19,5 @@ public class Canvas : MonoBehaviour
 public static class StaticValue {
     public static string username = "Doodle";
     public static ArrayList topPlayer = new ArrayList();
+    public static int playerBalance;
 }

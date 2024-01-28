@@ -9,7 +9,6 @@ public class LeaderBoard : MonoBehaviour
     private GameObject _content;
     void Start()
     {
-        
         foreach (var _player in StaticValue.topPlayer)
         {
             var player = (string [])_player;
