@@ -1671,10 +1671,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   puase: 0
-  _sprites:
-  - {fileID: 21300000, guid: bf65ad1aea4c51c1ca9fae04749d728e, type: 3}
+  _normalSprite:
   - {fileID: 21300000, guid: 637293b9b40bbb92989098e3e7202b8e, type: 3}
+  - {fileID: 21300000, guid: bf65ad1aea4c51c1ca9fae04749d728e, type: 3}
   - {fileID: 21300000, guid: 52dfb5ef620432ad683ea643cdc8ce86, type: 3}
+  _blueSprite:
+  - {fileID: 21300000, guid: b711833ba8d1d08498bed9a0c2c787db, type: 3}
+  - {fileID: 21300000, guid: 4b6e473747418244faee4cb3599675fc, type: 3}
+  - {fileID: 21300000, guid: 5b2bdaf320f59794bbf0a0281d4e2a68, type: 3}
+  _bunnySprite:
+  - {fileID: 21300000, guid: 3ab376f07ecc82b40ab4886082b216c5, type: 3}
+  - {fileID: 21300000, guid: 3a7d3e3fa62235f4a8bbc10c757b0f76, type: 3}
+  - {fileID: 21300000, guid: 0e3ebc829e511394c8152d6918b2802c, type: 3}
+  _astronautSprite:
+  - {fileID: 21300000, guid: f31c2a45f46a3d44c811ae6f891b36fa, type: 3}
+  - {fileID: 21300000, guid: 569a998d51147ff45882bfc8fb35c0cc, type: 3}
+  - {fileID: 21300000, guid: c3c12947ef9a0e1419216d5fa4b0623b, type: 3}
+  _ghostSprite:
+  - {fileID: 21300000, guid: c0c05c771efdf4f4da79c68e2ba25b8c, type: 3}
+  - {fileID: 21300000, guid: edcd5f0f477914343b85cd7ef4430f3a, type: 3}
+  - {fileID: 21300000, guid: 60fa54ecf0d51634cba3e376a7edfeec, type: 3}
+  _indianaSprite:
+  - {fileID: 21300000, guid: c0c05c771efdf4f4da79c68e2ba25b8c, type: 3}
+  - {fileID: 21300000, guid: e3f0953f8669d594bb70c74d712be963, type: 3}
+  - {fileID: 21300000, guid: 60fa54ecf0d51634cba3e376a7edfeec, type: 3}
+  _snowSprite:
+  - {fileID: 21300000, guid: 6543f3b8aaa6b7a4087ed11944772594, type: 3}
+  - {fileID: 21300000, guid: 692e14beb1b90f2468735f94963e1663, type: 3}
+  - {fileID: 21300000, guid: 36994b97c296845479150bc7bcdfd528, type: 3}
+  _soccerSprite:
+  - {fileID: 21300000, guid: 6543f3b8aaa6b7a4087ed11944772594, type: 3}
+  - {fileID: 21300000, guid: 692e14beb1b90f2468735f94963e1663, type: 3}
+  - {fileID: 21300000, guid: 36994b97c296845479150bc7bcdfd528, type: 3}
   _gun: {fileID: 863021602}
   _ball: {fileID: 4836375762089942948, guid: 068d128d2641162439979c7542ea1d4c, type: 3}
 --- !u!1 &1515306029

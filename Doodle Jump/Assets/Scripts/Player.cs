@@ -16,8 +16,16 @@ public class Player : MonoBehaviour
     private float _lastFire;
     private float _fireRate;
     private bool _shrink;
-    
-    [SerializeField] private Sprite[] _sprites;
+    private Sprite[] _sprites;
+
+    [SerializeField] private Sprite[] _normalSprite;
+    [SerializeField] private Sprite[] _blueSprite;
+    [SerializeField] private Sprite[] _bunnySprite;
+    [SerializeField] private Sprite[] _astronautSprite;
+    [SerializeField] private Sprite[] _ghostSprite;
+    [SerializeField] private Sprite[] _indianaSprite;
+    [SerializeField] private Sprite[] _snowSprite;
+    [SerializeField] private Sprite[] _soccerSprite;
     [SerializeField] private GameObject _gun;
     [SerializeField] private GameObject _ball;
     
@@ -25,6 +33,16 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        var _spriteArray = new [] {_normalSprite, _blueSprite, _bunnySprite, _astronautSprite, _ghostSprite, _indianaSprite, _snowSprite,_soccerSprite};
+        _sprites = _spriteArray[StaticValue.choosenSprite];
+        foreach (var i in _spriteArray)
+        {
+            if (i != _sprites)
+            {
+                var sprites = i;
+                sprites = new Sprite[0];
+            }
+        }
         lastPlatformY = -10;
         _gravity = 0.2f;
         _shrink = false;
@@ -45,6 +63,9 @@ public class Player : MonoBehaviour
             Debug.LogError("Sprite Render in Player is null");
         if (_audioManager == null)
             Debug.LogError("Audio Source is null");
+
+
+        _sprite.sprite = _sprites[0];
 
 #if UNITY_ANDROID
         Input.gyro.enabled = true;
@@ -137,10 +158,10 @@ public class Player : MonoBehaviour
         else
             _speed.x = 0;
 #endif
-        if (_sprite.sprite != _sprites[0] && _speed.x < 0)
-            _sprite.sprite = _sprites[0];
-        else if (_sprite.sprite != _sprites[1] && _speed.x > 0)
+        if (_sprite.sprite != _sprites[1] && _speed.x < 0)
             _sprite.sprite = _sprites[1];
+        else if (_sprite.sprite != _sprites[0] && _speed.x > 0)
+            _sprite.sprite = _sprites[0];
         if (this.transform.position.x <= -3.20f)
         {
             var vector3 = this.transform.position;

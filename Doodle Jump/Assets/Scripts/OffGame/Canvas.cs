@@ -19,5 +19,6 @@ public class Canvas : MonoBehaviour
 public static class StaticValue {
     public static string username = "Doodle";
     public static ArrayList topPlayer = new ArrayList();
-    public static int playerBalance;
+    public static int playerBalance = 500;
+    public static int choosenSprite = 0;
 }
