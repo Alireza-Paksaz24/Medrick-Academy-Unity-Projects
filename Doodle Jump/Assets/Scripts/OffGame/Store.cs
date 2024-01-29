@@ -50,9 +50,12 @@ public class Store : MonoBehaviour
             StaticValue.playerBalance -= value;
             PlayerPrefs.SetInt(StaticValue.username,StaticValue.playerBalance);
             StaticValue.choosenSprite = index;
+            skins.Add(choose.name);
+            string skinsString = string.Join(",", skins.Cast<string>().ToArray());
+            PlayerPrefs.SetString("store", skinsString);
             changeColor();
             _balance.text = PlayerPrefs.GetInt(StaticValue.username,0).ToString();
-            skins.Add(choose.name);
+            
         }
     }
 
