@@ -62,14 +62,20 @@ Doodle Jump is a popular mobile game that offers addictive, endless jumping fun.
 Here are some glimpses of "Galaxy Shooter" in action:
 
 
+![Screenshot 2024-01-31 134454](https://github.com/Alireza-Paksaz24/Medrick-Academy-Unity-Projects/assets/113334088/3d405ffe-4fe1-4ed9-8748-5246863d1035)
+![Screenshot 2024-01-31 134502](https://github.com/Alireza-Paksaz24/Medrick-Academy-Unity-Projects/assets/113334088/32bb96a3-8a00-42b8-95b2-e655bafd83c1)
+![Screenshot 2024-01-31 134514](https://github.com/Alireza-Paksaz24/Medrick-Academy-Unity-Projects/assets/113334088/dd60e6b6-403a-4921-a7b3-5e475ad674b3)
+![Screenshot 2024-01-31 134633](https://github.com/Alireza-Paksaz24/Medrick-Academy-Unity-Projects/assets/113334088/db9ddbe2-eb5b-4b6f-9ccc-3ee4e548f2bd)
+![Screenshot 2024-01-31 134701](https://github.com/Alireza-Paksaz24/Medrick-Academy-Unity-Projects/assets/113334088/b21ebe36-2411-4c50-a6dd-c1bc5f5a1b8e)
+![Screenshot 2024-01-31 124520](https://github.com/Alireza-Paksaz24/Medrick-Academy-Unity-Projects/assets/113334088/eb4644af-4734-423e-a4dd-da6ed2336d0a)
+
+
 ### Installation
 
 Download the version specific to your OS:
 
-- [Windows Version](https://github.com/Alireza-Paksaz24/Galaxy-Shooter/releases/download/0.1/Galaxy-Shooter-V0.1-Windows.zip)
-- [Linux Version](https://github.com/Alireza-Paksaz24/Galaxy-Shooter/releases/download/0.1/Galaxy-Shooter-V0.1-Linux.tar.gz)
-- [WebGL Version](https://github.com/Alireza-Paksaz24/Galaxy-Shooter/releases/download/0.1/Galaxy-Shooter-V0.1-WebGL.rar)
-- [Android Version](https://github.com/Alireza-Paksaz24/Galaxy-Shooter/releases/download/0.1/Galaxy-Shooter-V0.1-Android.apk)
+- [Windows Version](https://github.com/Alireza-Paksaz24/Medrick-Academy-Unity-Projects/releases/download/V0.2/Doodle-Jump-V0.2-Windows.zip)
+- [Android Version](https://github.com/Alireza-Paksaz24/Medrick-Academy-Unity-Projects/releases/download/V0.2/Doodle-jump-V0.2-Android.apk)
 
 ### How to Play
 
