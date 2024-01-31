@@ -21,18 +21,18 @@ This repository contains Unity projects implemented based on the Udemy course "C
 
 Here are some glimpses of "Galaxy Shooter" in action:
 
-!Screenshot 2024-01-14 224155
+![296611846-158c8951-dfca-46e5-96fa-8c5b607877eb](https://github.com/Alireza-Paksaz24/Medrick-Academy-Unity-Projects/assets/113334088/54177bd0-0cc5-4e49-88d1-b34ab7302626)
 
-!Screenshot 2024-01-14 224100
+![296611841-dac591c9-cc83-49d2-92b9-02581b869b99](https://github.com/Alireza-Paksaz24/Medrick-Academy-Unity-Projects/assets/113334088/53bdede1-4254-4eeb-95d8-05b88269bf2c)
 
 ### Installation
 
 Download the version specific to your OS:
 
-- Windows Version
-- Linux Version
-- WebGL Version
-- Android Version
+- [Windows Version](https://github.com/Alireza-Paksaz24/Galaxy-Shooter/releases/download/0.1/Galaxy-Shooter-V0.1-Windows.zip)
+- [Linux Version](https://github.com/Alireza-Paksaz24/Galaxy-Shooter/releases/download/0.1/Galaxy-Shooter-V0.1-Linux.tar.gz)
+- [WebGL Version](https://github.com/Alireza-Paksaz24/Galaxy-Shooter/releases/download/0.1/Galaxy-Shooter-V0.1-WebGL.rar)
+- [Android Version](https://github.com/Alireza-Paksaz24/Galaxy-Shooter/releases/download/0.1/Galaxy-Shooter-V0.1-Android.apk)
 
 ### How to Play
 
@@ -61,14 +61,15 @@ Doodle Jump is a popular mobile game that offers addictive, endless jumping fun.
 
 Here are some glimpses of "Galaxy Shooter" in action:
 
+
 ### Installation
 
 Download the version specific to your OS:
 
-- Windows Version
-- Linux Version
-- WebGL Version
-- Android Version
+- [Windows Version](https://github.com/Alireza-Paksaz24/Galaxy-Shooter/releases/download/0.1/Galaxy-Shooter-V0.1-Windows.zip)
+- [Linux Version](https://github.com/Alireza-Paksaz24/Galaxy-Shooter/releases/download/0.1/Galaxy-Shooter-V0.1-Linux.tar.gz)
+- [WebGL Version](https://github.com/Alireza-Paksaz24/Galaxy-Shooter/releases/download/0.1/Galaxy-Shooter-V0.1-WebGL.rar)
+- [Android Version](https://github.com/Alireza-Paksaz24/Galaxy-Shooter/releases/download/0.1/Galaxy-Shooter-V0.1-Android.apk)
 
 ### How to Play
 
