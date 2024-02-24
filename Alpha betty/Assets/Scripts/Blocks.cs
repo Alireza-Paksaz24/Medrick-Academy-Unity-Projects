@@ -21,23 +21,12 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
     private void Start()
     {
         blockImageComponent = GetComponent<Image>();
-        character = 'a';
+        character = 'A';
     }
 
     public void SetNextBlock(GameObject block)
     {
         _nextBlock = block;
-    }
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (_previuseBlock == null)
-        {
-            _previuseBlock = this.gameObject;
-        }
-        else
-        {
-            
-        }
     }
     
     public void OnPointerDown(PointerEventData eventData)
@@ -64,13 +53,29 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && this.gameObject == _currentBlock)
+        {
+            string temp = "";
+            foreach (var i in _selected)
+            {
+                temp += i.name;
+            }
+            Debug.Log(temp);
+            Debug.Log("Current Block = "+_currentBlock);
+            Debug.Log("Previuse Block = "+_previuseBlock);
+        }
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
+        // Debug.Log(word);
         if (_currentBlock == _nextBlock && _currentBlock != null)
         {
             _selected.Remove(_currentBlock);
             _currentBlock.GetComponent<Blocks>().Release();
-            _currentBlock = _previuseBlock;
+            _currentBlock = this.gameObject;
         }
         if (_isClicked && !_isSelected)
         {
@@ -83,7 +88,15 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
             _currentBlock = this.gameObject;
         }
     }
-
+    
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (_previuseBlock == null)
+        {
+            _previuseBlock = this.gameObject;
+        }
+    }
+    
     private void SelectBlock()
     {
         blockImageComponent.color = Color.green;

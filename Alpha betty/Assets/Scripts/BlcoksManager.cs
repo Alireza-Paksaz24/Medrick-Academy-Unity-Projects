@@ -99,6 +99,6 @@ public class BlcoksManager : MonoBehaviour
             }
             boardString += "\n";
         }
-        Debug.Log(boardString);
+        // Debug.Log(boardString);
     }
 }
