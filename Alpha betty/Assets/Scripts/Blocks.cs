@@ -7,6 +7,8 @@ using TMPro;
 
 public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerUpHandler
 {
+    private BlcoksManager _blockManager;
+    
     private static bool _isClicked = false;
     private GameObject _nextBlock = null;
     private GameObject _previuseBlock = null;
@@ -18,6 +20,7 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
     
     private Image blockImageComponent;
     private char character;
+    private bool _destroy = false;
 
     private void Update()
     {
@@ -37,6 +40,7 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
     
     private void Start()
     {
+        _blockManager = this.transform.parent.GetComponent<BlcoksManager>();
         blockImageComponent = GetComponent<Image>();
         character = this.gameObject.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text[0];
     }
@@ -52,10 +56,17 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
         {
             BlockStatusChange(true);
             _isClicked = false;
+            if (_blockManager.IsCorrect(word))
+            {
+                Debug.Log("Yeah");
+                _destroy = true;
+            }else
+                Debug.Log("No way");
             foreach (var block in _selected)
             {
-                
                 block.GetComponent<Blocks>().Release();
+                if (_destroy)
+                    Destroy(block);
             }
             _selected.Clear();
         }

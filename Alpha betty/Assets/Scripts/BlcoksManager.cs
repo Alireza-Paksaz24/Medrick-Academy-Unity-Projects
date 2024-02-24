@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 
 public class BlcoksManager : MonoBehaviour
@@ -111,5 +112,10 @@ public class BlcoksManager : MonoBehaviour
             boardString += "\n";
         }
         Debug.Log(boardString);
+    }
+
+    public bool IsCorrect(string word)
+    {
+        return words.Contains(word);
     }
 }
