@@ -1,16 +1,17 @@
 using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
 
 public class BlcoksManager : MonoBehaviour
 {
-    private string[] words = { "Hello", "World", "Array", "Random", "Words" };
+    private string[] words = { "HELLO", "WORLD", "ARRAY", "RANDOM", "WORDS" };
     private char[,] board = new char[5, 5];
 
     void Start()
     {
         // Select a random word with less than 25 characters
         string chosenWord = words[Random.Range(0,words.Length)];
-
+        Debug.Log(chosenWord);
         // Try to place the word
         if (!PlaceWordInBoard(board, chosenWord))
         {
@@ -25,6 +26,16 @@ public class BlcoksManager : MonoBehaviour
 
         // Print the board
         PrintBoard(board);
+
+        int blockNumber = 0;
+        for (int i = 0; i < 5; i++)
+        {
+            for (int j = 0; j < 5;j++)
+            {
+                this.transform.GetChild(blockNumber).GetComponent<Blocks>().SetChar(board[i,j].ToString());
+                blockNumber++;
+            }
+        }
     }
 
     bool PlaceWordInBoard(char[,] board, string word)
@@ -99,6 +110,6 @@ public class BlcoksManager : MonoBehaviour
             }
             boardString += "\n";
         }
-        // Debug.Log(boardString);
+        Debug.Log(boardString);
     }
 }

@@ -118,5 +118,10 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
             _isClicked = true;
     }
 
+    public void SetChar(string character)
+    {
+        this.character = character[0];
+        transform.GetChild(0).GetComponent<TMP_Text>().text = character;
+    }
 
 }
