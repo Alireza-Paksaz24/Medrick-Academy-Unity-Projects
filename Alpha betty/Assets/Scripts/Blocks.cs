@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
-public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
+public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerUpHandler
 {
     private static bool _isClicked = false;
     private GameObject _nextBlock = null;
@@ -18,10 +19,26 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
     private Image blockImageComponent;
     private char character;
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && this.gameObject == _currentBlock)
+        {
+            // string temp = "";
+            // foreach (var i in _selected)
+            // {
+            //     temp += i.name;
+            // }
+            // Debug.Log(temp);
+            // Debug.Log("Current Block = "+_currentBlock);
+            // Debug.Log("Previuse Block = "+_previuseBlock);
+            Debug.Log(word);
+        }
+    }
+    
     private void Start()
     {
         blockImageComponent = GetComponent<Image>();
-        character = 'A';
+        character = this.gameObject.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text[0];
     }
 
     public void SetNextBlock(GameObject block)
@@ -29,15 +46,6 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
         _nextBlock = block;
     }
     
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        if (eventData.button == PointerEventData.InputButton.Left)
-        {
-            BlockStatusChange(false);
-            SelectBlock();
-        }
-    }
-
     public void OnPointerUp(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left)
@@ -52,21 +60,16 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
             _selected.Clear();
         }
     }
-
-    private void Update()
+    public void OnPointerDown(PointerEventData eventData)
     {
-        if (Input.GetKeyDown(KeyCode.Space) && this.gameObject == _currentBlock)
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
-            string temp = "";
-            foreach (var i in _selected)
-            {
-                temp += i.name;
-            }
-            Debug.Log(temp);
-            Debug.Log("Current Block = "+_currentBlock);
-            Debug.Log("Previuse Block = "+_previuseBlock);
+            BlockStatusChange(false);
+            SelectBlock();
+            _currentBlock = this.gameObject;
         }
     }
+
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -86,14 +89,6 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
                 _previuseBlock = _currentBlock;
             }
             _currentBlock = this.gameObject;
-        }
-    }
-    
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (_previuseBlock == null)
-        {
-            _previuseBlock = this.gameObject;
         }
     }
     
