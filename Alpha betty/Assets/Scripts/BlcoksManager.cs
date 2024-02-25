@@ -5,16 +5,47 @@ using TMPro;
 
 public class BlcoksManager : MonoBehaviour
 {
-    private string[] words = { "HELLO", "WORLD", "ARRAY", "RANDOM", "WORDS" };
-    private char[,] board = new char[5, 5];
+    private string[] _words = { "HELLO", "WORLD", "ARRAY", "RANDOM", "WORDS" };
+    private char[,] _board = new char[5, 5];
+    private int[,] _position =
+    {
+        {-180,180} ,{-90,180} ,{0,180} ,{90,180} ,{180,180},
+        {-180,90}  ,{-90,90}  ,{0,90}  ,{90,90}  ,{180,90},
+        {-180,0}   ,{-90,0}   ,{0,0}   ,{90,0}   ,{180,0},
+        {-180,-90} ,{-90,-90} ,{0,-90} ,{90,-90} ,{180,-90},
+        {-180,-180},{-90,-180},{0,-180},{90,-180},{180,-180},
+    };
+    
+    private GameObject[,] _blocks = new GameObject[5,5]; 
+    
+    [SerializeField] private GameObject _block;
 
     void Start()
     {
+        Vector2 blockBoard = new Vector2(0,0);
+        for (int i = 0; i < _position.GetLength(0); i++)
+        {
+            // Corrected access to multi-dimensional array elements
+            int x = _position[i, 0];
+            int y = _position[i, 1];
+            var instantiateBlock = Instantiate(_block,this.transform,false);
+            instantiateBlock.GetComponent<RectTransform>().anchoredPosition = new Vector2(x, y);
+            _blocks[(int) blockBoard.x,(int) blockBoard.y] = instantiateBlock;
+            if (blockBoard.x == 4)
+            {
+                blockBoard.x = 0;
+                blockBoard.y += 1;
+            }
+            else
+            {
+                blockBoard.x += 1;
+            }
+        }
         // Select a random word with less than 25 characters
-        string chosenWord = words[Random.Range(0,words.Length)];
+        string chosenWord = _words[Random.Range(0,_words.Length)];
         Debug.Log(chosenWord);
         // Try to place the word
-        if (!PlaceWordInBoard(board, chosenWord))
+        if (!PlaceWordInBoard(_board, chosenWord))
         {
             Debug.Log("Failed to place the word. Trying again...");
             // Instead of calling Main again, we'll just stop execution here
@@ -23,17 +54,14 @@ public class BlcoksManager : MonoBehaviour
         }
 
         // Fill the rest of the board with random letters
-        FillBoard(board);
-
-        // Print the board
-        PrintBoard(board);
+        FillBoard(_board);
 
         int blockNumber = 0;
         for (int i = 0; i < 5; i++)
         {
             for (int j = 0; j < 5;j++)
             {
-                this.transform.GetChild(blockNumber).GetComponent<Blocks>().SetChar(board[i,j].ToString());
+                this.transform.GetChild(blockNumber).GetComponent<Blocks>().SetChar(_board[i,j].ToString());
                 blockNumber++;
             }
         }
@@ -100,22 +128,10 @@ public class BlcoksManager : MonoBehaviour
         }
     }
 
-    void PrintBoard(char[,] board)
-    {
-        string boardString = "";
-        for (int i = 0; i < board.GetLength(0); i++)
-        {
-            for (int j = 0; j < board.GetLength(1); j++)
-            {
-                boardString += board[i, j] + " ";
-            }
-            boardString += "\n";
-        }
-        Debug.Log(boardString);
-    }
-
     public bool IsCorrect(string word)
     {
-        return words.Contains(word);
+        return _words.Contains(word);
     }
+    
+    
 }
