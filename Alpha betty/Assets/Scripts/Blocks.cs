@@ -26,14 +26,6 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
     {
         if (Input.GetKeyDown(KeyCode.Space) && this.gameObject == _currentBlock)
         {
-            // string temp = "";
-            // foreach (var i in _selected)
-            // {
-            //     temp += i.name;
-            // }
-            // Debug.Log(temp);
-            // Debug.Log("Current Block = "+_currentBlock);
-            // Debug.Log("Previuse Block = "+_previuseBlock);
             Debug.Log(word);
         }
     }

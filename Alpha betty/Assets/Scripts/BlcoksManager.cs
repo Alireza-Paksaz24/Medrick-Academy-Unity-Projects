@@ -127,11 +127,116 @@ public class BlcoksManager : MonoBehaviour
             }
         }
     }
+    private List<(int startX, int startY, int endX, int endY)> FindWordPositions(string word)
+    {
+        List<(int, int, int, int)> positions = new List<(int, int, int, int)>();
+        int wordLength = word.Length;
 
+        for (int row = 0; row < _board.GetLength(0); row++)
+        {
+            for (int col = 0; col < _board.GetLength(1); col++)
+            {
+                // Check in all directions from each starting point
+                foreach (var direction in GetDirections())
+                {
+                    int endX = row + direction.dr * (wordLength - 1);
+                    int endY = col + direction.dc * (wordLength - 1);
+
+                    // Check if the end position is within bounds
+                    if (endX >= 0 && endX < _board.GetLength(0) && endY >= 0 && endY < _board.GetLength(1))
+                    {
+                        string foundWord = "";
+                        for (int i = 0; i < wordLength; i++)
+                        {
+                            int currentRow = row + i * direction.dr;
+                            int currentCol = col + i * direction.dc;
+                            foundWord += _board[currentRow, currentCol];
+                        }
+
+                        if (foundWord == word)
+                        {
+                            positions.Add((row, col, endX, endY));
+                        }
+                    }
+                }
+            }
+        }
+
+        return positions;
+    }
+
+    private List<(int dr, int dc)> GetDirections()
+    {
+        // Represents eight possible directions: N, NE, E, SE, S, SW, W, NW
+        return new List<(int, int)>
+        {
+            (-1, 0), // N
+            (-1, 1), // NE
+            (0, 1),  // E
+            (1, 1),  // SE
+            (1, 0),  // S
+            (1, -1), // SW
+            (0, -1), // W
+            (-1, -1) // NW
+        };
+    }
+    private void RemoveWordFromBlocks(string word)
+    {
+        List<(int startX, int startY, int endX, int endY)> wordPositions = FindWordPositions(word);
+
+        foreach (var position in wordPositions)
+        {
+            int startX = position.startX;
+            int startY = position.startY;
+            int endX = position.endX;
+            int endY = position.endY;
+
+            int deltaX = endX - startX;
+            int deltaY = endY - startY;
+
+            // Determine the step direction for both x and y
+            int stepX = deltaX == 0 ? 0 : deltaX / Mathf.Abs(deltaX);
+            int stepY = deltaY == 0 ? 0 : deltaY / Mathf.Abs(deltaY);
+
+            // Number of steps to take (including the start position)
+            int steps = Mathf.Max(Mathf.Abs(deltaX), Mathf.Abs(deltaY)) + 1;
+
+            for (int i = 0; i < steps; i++)
+            {
+                int currentX = startX + (i * stepX);
+                int currentY = startY + (i * stepY);
+
+                // Check bounds just to be safe
+                if (currentX >= 0 && currentX < _blocks.GetLength(0) && currentY >= 0 && currentY < _blocks.GetLength(1))
+                {
+                    // Destroy the GameObject to clean up, if needed
+                    if (_blocks[currentX, currentY] != null)
+                    {
+                        Destroy(_blocks[currentX, currentY]);
+                    }
+                
+                    // Set the block position to null
+                    _blocks[currentX, currentY] = null;
+                }
+            }
+        }
+    }
     public bool IsCorrect(string word)
     {
-        return _words.Contains(word);
+        bool correct = _words.Contains(word);
+        if (correct)
+        {
+            RemoveWordFromBlocks(word);
+        }
+        
+        return correct;
     }
-    
-    
+
+    public void FallOfBlocks()
+    {
+        for (int i = 0; i < 25; i++)
+        {
+            
+        }
+    }
 }
