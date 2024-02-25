@@ -8,7 +8,8 @@ using TMPro;
 public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerUpHandler
 {
     private BlcoksManager _blockManager;
-    
+    private int[] posi = new int[2];
+    private int[] _destPosi = new int[2];
     private static bool _isClicked = false;
     private GameObject _nextBlock = null;
     private GameObject _previuseBlock = null;
@@ -37,6 +38,20 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
         character = this.gameObject.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text[0];
     }
 
+    public void SetPosi(int x, int y)
+    {
+        posi[0] = x;
+        posi[1] = y;
+    }
+    public void SetDestPosi(int x, int y)
+    {
+        _destPosi[0] = x;
+        _destPosi[1] = y;
+    }
+    public int[] GetPosi()
+    {
+        return posi;
+    }
     public void SetNextBlock(GameObject block)
     {
         _nextBlock = block;
@@ -48,17 +63,18 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
         {
             BlockStatusChange(true);
             _isClicked = false;
-            if (_blockManager.IsCorrect(word))
-            {
-                Debug.Log("Yeah");
-                _destroy = true;
-            }else
-                Debug.Log("No way");
+            _blockManager.CheckWord(word);
+            // if (_blockManager.IsCorrect(word))
+            // {
+            //     Debug.Log("Yeah");
+            //     _destroy = true;
+            // }else
+            //     Debug.Log("No way");
             foreach (var block in _selected)
             {
                 block.GetComponent<Blocks>().Release();
-                if (_destroy)
-                    Destroy(block);
+                // if (_destroy)
+                //     Destroy(block);
             }
             _selected.Clear();
         }
@@ -127,4 +143,8 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
         transform.GetChild(0).GetComponent<TMP_Text>().text = character;
     }
 
+    public List<GameObject> GetSelected()
+    {
+        return _selected;
+    }
 }

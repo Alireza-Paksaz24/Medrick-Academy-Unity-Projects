@@ -5,7 +5,8 @@ using TMPro;
 
 public class BlcoksManager : MonoBehaviour
 {
-    private string[] _words = { "HELLO", "WORLD", "ARRAY", "RANDOM", "WORDS" };
+    private int[] _countNewBlocks = new []{0,0,0,0,0};
+    private string[] _words = { "ABCD","C" };
     private char[,] _board = new char[5, 5];
     private int[,] _position =
     {
@@ -31,6 +32,7 @@ public class BlcoksManager : MonoBehaviour
             var instantiateBlock = Instantiate(_block,this.transform,false);
             instantiateBlock.GetComponent<RectTransform>().anchoredPosition = new Vector2(x, y);
             _blocks[(int) blockBoard.x,(int) blockBoard.y] = instantiateBlock;
+            instantiateBlock.GetComponent<Blocks>().SetPosi((int) blockBoard.x, (int) blockBoard.y);
             if (blockBoard.x == 4)
             {
                 blockBoard.x = 0;
@@ -123,110 +125,57 @@ public class BlcoksManager : MonoBehaviour
             for (int j = 0; j < board.GetLength(1); j++)
             {
                 if (board[i, j] == '\0')
-                    board[i, j] = (char)('A' + Random.Range(0,26));
+                    board[i, j] = GenerateCharacter();
             }
         }
     }
-    private List<(int startX, int startY, int endX, int endY)> FindWordPositions(string word)
+
+    private char GenerateCharacter()
     {
-        List<(int, int, int, int)> positions = new List<(int, int, int, int)>();
-        int wordLength = word.Length;
-
-        for (int row = 0; row < _board.GetLength(0); row++)
-        {
-            for (int col = 0; col < _board.GetLength(1); col++)
-            {
-                // Check in all directions from each starting point
-                foreach (var direction in GetDirections())
-                {
-                    int endX = row + direction.dr * (wordLength - 1);
-                    int endY = col + direction.dc * (wordLength - 1);
-
-                    // Check if the end position is within bounds
-                    if (endX >= 0 && endX < _board.GetLength(0) && endY >= 0 && endY < _board.GetLength(1))
-                    {
-                        string foundWord = "";
-                        for (int i = 0; i < wordLength; i++)
-                        {
-                            int currentRow = row + i * direction.dr;
-                            int currentCol = col + i * direction.dc;
-                            foundWord += _board[currentRow, currentCol];
-                        }
-
-                        if (foundWord == word)
-                        {
-                            positions.Add((row, col, endX, endY));
-                        }
-                    }
-                }
-            }
-        }
-
-        return positions;
+        return (char)('A' + Random.Range(0,26));
     }
 
-    private List<(int dr, int dc)> GetDirections()
+    public void RemoveWordFromBlocks()
     {
-        // Represents eight possible directions: N, NE, E, SE, S, SW, W, NW
-        return new List<(int, int)>
+        List<GameObject> selected = transform.GetChild(0).GetComponent<Blocks>().GetSelected();
+        foreach (var selectedBlock in selected)
         {
-            (-1, 0), // N
-            (-1, 1), // NE
-            (0, 1),  // E
-            (1, 1),  // SE
-            (1, 0),  // S
-            (1, -1), // SW
-            (0, -1), // W
-            (-1, -1) // NW
-        };
-    }
-    private void RemoveWordFromBlocks(string word)
-    {
-        List<(int startX, int startY, int endX, int endY)> wordPositions = FindWordPositions(word);
-
-        foreach (var position in wordPositions)
-        {
-            int startX = position.startX;
-            int startY = position.startY;
-            int endX = position.endX;
-            int endY = position.endY;
-
-            int deltaX = endX - startX;
-            int deltaY = endY - startY;
-
-            // Determine the step direction for both x and y
-            int stepX = deltaX == 0 ? 0 : deltaX / Mathf.Abs(deltaX);
-            int stepY = deltaY == 0 ? 0 : deltaY / Mathf.Abs(deltaY);
-
-            // Number of steps to take (including the start position)
-            int steps = Mathf.Max(Mathf.Abs(deltaX), Mathf.Abs(deltaY)) + 1;
-
-            for (int i = 0; i < steps; i++)
-            {
-                int currentX = startX + (i * stepX);
-                int currentY = startY + (i * stepY);
-
-                // Check bounds just to be safe
-                if (currentX >= 0 && currentX < _blocks.GetLength(0) && currentY >= 0 && currentY < _blocks.GetLength(1))
-                {
-                    // Destroy the GameObject to clean up, if needed
-                    if (_blocks[currentX, currentY] != null)
-                    {
-                        Destroy(_blocks[currentX, currentY]);
-                    }
-                
-                    // Set the block position to null
-                    _blocks[currentX, currentY] = null;
-                }
-            }
+            Destroy(selectedBlock);
+            int[] posi = selectedBlock.GetComponent<Blocks>().GetPosi();
+            _blocks[posi[0], posi[1]] = null;
+            _countNewBlocks[posi[0]] += 1;
         }
     }
-    public bool IsCorrect(string word)
+    public bool CheckWord(string word)
     {
         bool correct = _words.Contains(word);
         if (correct)
         {
-            RemoveWordFromBlocks(word);
+            RemoveWordFromBlocks();
+            FallOfBlocks();
+            for (int i = 0; i < 5; i++)
+            {
+                GameObject[] tempArrayForBlocks = new GameObject[_countNewBlocks[i]];
+                for (int j = 0; j < _countNewBlocks[i]; j++)
+                {
+                    var instantiateBlock = Instantiate(_block, this.transform, false);
+                    instantiateBlock.GetComponent<RectTransform>().anchoredPosition =
+                        new Vector2(-180 + (i * 90), 270 + j * 90);
+                    instantiateBlock.GetComponent<Blocks>().SetPosi(i,-1);
+                    tempArrayForBlocks[j] = instantiateBlock;
+                }
+                tempArrayForBlocks.Reverse();
+                for (int j = 0; j < _countNewBlocks[i]; j++)
+                {
+                    tempArrayForBlocks[j].GetComponent<Blocks>().SetDestPosi(i,j);
+                    _blocks[i, j] = tempArrayForBlocks[j];
+                    var value = GenerateCharacter();
+                    _blocks[i,j].GetComponent<Blocks>().SetChar(value.ToString());
+                    _board[i, j] = value;
+                }
+            }
+
+            _countNewBlocks = new[] {0, 0, 0, 0, 0};
         }
         
         return correct;
@@ -234,9 +183,18 @@ public class BlcoksManager : MonoBehaviour
 
     public void FallOfBlocks()
     {
-        for (int i = 0; i < 25; i++)
+        for (int i = 0; i < 5; i++)
         {
-            
+            for (int j = 0; j < 5; j++)
+            {
+                if (_blocks[i, j] == null)
+                {
+                    for (int z = j; z > 0; z--)
+                    {
+                        _blocks[i, z] = _blocks[i, z - 1];
+                    }
+                }
+            }
         }
     }
 }
