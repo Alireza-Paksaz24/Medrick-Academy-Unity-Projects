@@ -31,8 +31,8 @@ public class BlcoksManager : MonoBehaviour
             int y = _position[i, 1];
             var instantiateBlock = Instantiate(_block,this.transform,false);
             instantiateBlock.GetComponent<RectTransform>().anchoredPosition = new Vector2(x, y);
-            _blocks[(int) blockBoard.x,(int) blockBoard.y] = instantiateBlock;
-            instantiateBlock.GetComponent<Blocks>().SetPosi((int) blockBoard.x, (int) blockBoard.y);
+            _blocks[(int) blockBoard.y,(int) blockBoard.x] = instantiateBlock;
+            instantiateBlock.GetComponent<Blocks>().SetPosi((int) blockBoard.y, (int) blockBoard.x);
             if (blockBoard.x == 4)
             {
                 blockBoard.x = 0;
@@ -118,6 +118,7 @@ public class BlcoksManager : MonoBehaviour
         return false;
     }
 
+
     void FillBoard(char[,] board)
     {
         for (int i = 0; i < board.GetLength(0); i++)
@@ -146,6 +147,7 @@ public class BlcoksManager : MonoBehaviour
             _countNewBlocks[posi[0]] += 1;
         }
     }
+    
     public bool CheckWord(string word)
     {
         bool correct = _words.Contains(word);
@@ -167,11 +169,11 @@ public class BlcoksManager : MonoBehaviour
                 tempArrayForBlocks.Reverse();
                 for (int j = 0; j < _countNewBlocks[i]; j++)
                 {
-                    tempArrayForBlocks[j].GetComponent<Blocks>().SetDestPosi(i,j);
-                    _blocks[i, j] = tempArrayForBlocks[j];
+                    tempArrayForBlocks[j].GetComponent<Blocks>().SetDestPosi(j,i);
+                    _blocks[j, i] = tempArrayForBlocks[j];
                     var value = GenerateCharacter();
-                    _blocks[i,j].GetComponent<Blocks>().SetChar(value.ToString());
-                    _board[i, j] = value;
+                    _blocks[j,i].GetComponent<Blocks>().SetChar(value.ToString());
+                    _board[j,i] = value;
                 }
             }
 
@@ -191,10 +193,33 @@ public class BlcoksManager : MonoBehaviour
                 {
                     for (int z = j; z > 0; z--)
                     {
-                        _blocks[i, z] = _blocks[i, z - 1];
+                        _blocks[z,i] = _blocks[z - 1, i];
+                        _board[z,i] = _board[z - 1, i];
                     }
                 }
             }
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            string boardString = "";
+            for (int i = 0; i < _board.GetLength(0); i++)
+            {
+                for (int j = 0; j < _board.GetLength(1); j++)
+                {
+                    boardString += _board[i, j] + " ";
+                }
+
+                boardString += "\n";
+            }
+
+            Debug.Log(boardString);
+            var temp = _blocks;
+            var a = _blocks[1,2].name;
+            Debug.Log(a);
         }
     }
 }
