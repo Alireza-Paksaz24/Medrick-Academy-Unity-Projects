@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,7 +9,7 @@ using TMPro;
 public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerUpHandler
 {
     private BlcoksManager _blockManager;
-    private int[] posi = new int[2];
+    private int[] _posi = new int[2];
     private int[] _destPosi = new int[2];
     private static bool _isClicked = false;
     private GameObject _nextBlock = null;
@@ -40,17 +41,22 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
 
     public void SetPosi(int x, int y)
     {
-        posi[0] = x;
-        posi[1] = y;
+        _posi[0] = x;
+        _posi[1] = y;
+        SetDestPosi(_posi[0],_posi[1]);
     }
     public void SetDestPosi(int x, int y)
     {
         _destPosi[0] = x;
         _destPosi[1] = y;
     }
+    public int[] GetDestPosi()
+    {
+        return _destPosi;
+    }
     public int[] GetPosi()
     {
-        return posi;
+        return _posi;
     }
     public void SetNextBlock(GameObject block)
     {
@@ -64,17 +70,9 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
             BlockStatusChange(true);
             _isClicked = false;
             _blockManager.CheckWord(word);
-            // if (_blockManager.IsCorrect(word))
-            // {
-            //     Debug.Log("Yeah");
-            //     _destroy = true;
-            // }else
-            //     Debug.Log("No way");
             foreach (var block in _selected)
             {
                 block.GetComponent<Blocks>().Release();
-                // if (_destroy)
-                //     Destroy(block);
             }
             _selected.Clear();
         }
@@ -92,7 +90,8 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        // Debug.Log(word);
+        Debug.Log(string.Format("this block position is: [" + _posi[0].ToString() + "," + _posi[1].ToString() +
+                                "] \n the dist position is: [" + _destPosi[0].ToString() + "," + _destPosi[1].ToString() + "] \n value:" + character));
         if (_currentBlock == _nextBlock && _currentBlock != null)
         {
             _selected.Remove(_currentBlock);
@@ -146,5 +145,12 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
     public List<GameObject> GetSelected()
     {
         return _selected;
+    }
+
+    public void MoveBlock(Vector2 newPosition)
+    {
+        RectTransform rectTransform = this.GetComponent<RectTransform>();
+        float time = (rectTransform.anchoredPosition.y - newPosition.y)/180;
+        rectTransform.DOAnchorPos(newPosition, time).SetEase(Ease.InOutSine);
     }
 }
