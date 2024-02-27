@@ -23,14 +23,6 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
     private Image blockImageComponent;
     private char character;
     private bool _destroy = false;
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && this.gameObject == _currentBlock)
-        {
-            Debug.Log(word);
-        }
-    }
     
     private void Start()
     {
@@ -90,8 +82,6 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log(string.Format("this block position is: [" + _posi[0].ToString() + "," + _posi[1].ToString() +
-                                "] \n the dist position is: [" + _destPosi[0].ToString() + "," + _destPosi[1].ToString() + "] \n value:" + character));
         if (_currentBlock == _nextBlock && _currentBlock != null)
         {
             _selected.Remove(_currentBlock);

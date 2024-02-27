@@ -31,7 +31,7 @@ public class BlcoksManager : MonoBehaviour
         // Try to place the word
         if (!PlaceWordInBoard(_board, chosenWord))
         {
-            Debug.Log("Failed to place the word. Trying again...");
+            Debug.LogError("Failed to place the word. Trying again...");
             // Instead of calling Main again, we'll just stop execution here
             // Consider adjusting your logic to retry within Unity's update loop or through a user action
             return;
@@ -216,11 +216,6 @@ public class BlcoksManager : MonoBehaviour
                 }
                 boardString += "\n";
             }
-
-            Debug.Log(boardString);
-            var temp = _blocks;
-            var a = _blocks[1,2].name;
-            Debug.Log(a);
         }
     }
 }
