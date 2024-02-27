@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -7,6 +8,9 @@ using TMPro;
 
 public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerUpHandler
 {
+    private BlcoksManager _blockManager;
+    private int[] _posi = new int[2];
+    private int[] _destPosi = new int[2];
     private static bool _isClicked = false;
     private GameObject _nextBlock = null;
     private GameObject _previuseBlock = null;
@@ -18,29 +22,34 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
     
     private Image blockImageComponent;
     private char character;
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && this.gameObject == _currentBlock)
-        {
-            // string temp = "";
-            // foreach (var i in _selected)
-            // {
-            //     temp += i.name;
-            // }
-            // Debug.Log(temp);
-            // Debug.Log("Current Block = "+_currentBlock);
-            // Debug.Log("Previuse Block = "+_previuseBlock);
-            Debug.Log(word);
-        }
-    }
+    private bool _destroy = false;
     
     private void Start()
     {
+        _blockManager = this.transform.parent.GetComponent<BlcoksManager>();
         blockImageComponent = GetComponent<Image>();
         character = this.gameObject.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text[0];
     }
 
+    public void SetPosi(int x, int y)
+    {
+        _posi[0] = x;
+        _posi[1] = y;
+        SetDestPosi(_posi[0],_posi[1]);
+    }
+    public void SetDestPosi(int x, int y)
+    {
+        _destPosi[0] = x;
+        _destPosi[1] = y;
+    }
+    public int[] GetDestPosi()
+    {
+        return _destPosi;
+    }
+    public int[] GetPosi()
+    {
+        return _posi;
+    }
     public void SetNextBlock(GameObject block)
     {
         _nextBlock = block;
@@ -52,9 +61,9 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
         {
             BlockStatusChange(true);
             _isClicked = false;
+            _blockManager.CheckWord(word);
             foreach (var block in _selected)
             {
-                
                 block.GetComponent<Blocks>().Release();
             }
             _selected.Clear();
@@ -73,7 +82,6 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        // Debug.Log(word);
         if (_currentBlock == _nextBlock && _currentBlock != null)
         {
             _selected.Remove(_currentBlock);
@@ -118,5 +126,21 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
             _isClicked = true;
     }
 
+    public void SetChar(string character)
+    {
+        this.character = character[0];
+        transform.GetChild(0).GetComponent<TMP_Text>().text = character;
+    }
 
+    public List<GameObject> GetSelected()
+    {
+        return _selected;
+    }
+
+    public void MoveBlock(Vector2 newPosition)
+    {
+        RectTransform rectTransform = this.GetComponent<RectTransform>();
+        float time = (rectTransform.anchoredPosition.y - newPosition.y)/180;
+        rectTransform.DOAnchorPos(newPosition, time).SetEase(Ease.InOutSine);
+    }
 }

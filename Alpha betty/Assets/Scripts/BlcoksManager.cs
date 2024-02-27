@@ -1,30 +1,58 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
+using Random = UnityEngine.Random;
 
 public class BlcoksManager : MonoBehaviour
 {
-    private string[] words = { "Hello", "World", "Array", "Random", "Words" };
-    private char[,] board = new char[5, 5];
+    private int[] _countNewBlocks = new []{0,0,0,0,0};
+    private string[] _words = { "ABCD","C","A","B","D","E","F","G","H","I","J","K","L","N","O","P","Q","R","S" ,"W"};
+    private char[,] _board = new char[5, 5];
+    private int[,,] _position =
+    {
+        {{-180,180} ,{-90,180} ,{0,180} ,{90,180} ,{180,180}},
+        {{-180,90}  ,{-90,90}  ,{0,90}  ,{90,90}  ,{180,90}},
+        {{-180,0}   ,{-90,0}   ,{0,0}   ,{90,0}   ,{180,0}}, 
+        {{-180,-90} ,{-90,-90} ,{0,-90} ,{90,-90} ,{180,-90}},
+        {{-180,-180},{-90,-180},{0,-180},{90,-180},{180,-180}}
+    };
+    
+    private GameObject[,] _blocks = new GameObject[5,5]; 
+    
+    [SerializeField] private GameObject _block;
 
     void Start()
-    {
+    { 
         // Select a random word with less than 25 characters
-        string chosenWord = words[Random.Range(0,words.Length)];
-
+        string chosenWord = _words[Random.Range(0,_words.Length)];
+        Debug.Log(chosenWord);
         // Try to place the word
-        if (!PlaceWordInBoard(board, chosenWord))
+        if (!PlaceWordInBoard(_board, chosenWord))
         {
-            Debug.Log("Failed to place the word. Trying again...");
+            Debug.LogError("Failed to place the word. Trying again...");
             // Instead of calling Main again, we'll just stop execution here
             // Consider adjusting your logic to retry within Unity's update loop or through a user action
             return;
         }
 
         // Fill the rest of the board with random letters
-        FillBoard(board);
-
-        // Print the board
-        PrintBoard(board);
+        FillBoard(_board);
+        
+        for (int i = 0; i < _position.GetLength(0); i++)
+        {
+            for (int j = 0; j < _position.GetLength(1); j++)
+            {
+                int x = _position[i,j, 0];
+                int y = _position[i,j, 1];
+                var instantiateBlock = Instantiate(_block,this.transform,false);
+                instantiateBlock.GetComponent<RectTransform>().anchoredPosition = new Vector2(x, y);
+                _blocks[i,j] = instantiateBlock;
+                instantiateBlock.GetComponent<Blocks>().SetPosi(i, j);
+                instantiateBlock.GetComponent<Blocks>().SetChar(_board[i, j].ToString());
+            }
+        }
     }
 
     bool PlaceWordInBoard(char[,] board, string word)
@@ -75,7 +103,7 @@ public class BlcoksManager : MonoBehaviour
         board[row, col] = '\0';
         return false;
     }
-
+    
     void FillBoard(char[,] board)
     {
         for (int i = 0; i < board.GetLength(0); i++)
@@ -83,43 +111,14 @@ public class BlcoksManager : MonoBehaviour
             for (int j = 0; j < board.GetLength(1); j++)
             {
                 if (board[i, j] == '\0')
-                    board[i, j] = (char)('A' + Random.Range(0,26));
+                    board[i, j] = GenerateCharacter();
             }
         }
     }
 
-    private static Dictionary<char, int> letterFrequencies = new Dictionary<char, int>()
-    {
-        {'E', 21912}, {'T', 16587}, {'A', 14810}, {'O', 14003}, {'I', 13318}, {'N', 12666}, {'S', 11450}, {'R', 10977}, 
-        {'H', 10795}, {'D', 7874}, {'L', 7253}, {'U', 5246}, {'C', 4943}, {'M', 4761}, {'F', 4200}, {'Y', 3853}, 
-        {'W', 3819}, {'G', 3693}, {'P', 3316}, {'B', 2715}, {'V', 2019}, {'K', 1257}, {'X', 315}, {'Q', 205}, {'J', 188}, 
-        {'Z', 128}
-    };
-
     private char GenerateCharacter()
     {
-        // Compute total weight
-        int totalWeight = 0;
-        foreach (var pair in letterFrequencies)
-        {
-            totalWeight += pair.Value;
-        }
-
-        // Generate a random number within the total weight range
-        int randomNum = Random.Range(0,totalWeight);
-
-        // Find the corresponding letter based on the random number
-        foreach (var pair in letterFrequencies)
-        {
-            randomNum -= pair.Value;
-            if (randomNum < 0)
-            {
-                return pair.Key;
-            }
-        }
-
-        // Default to 'A' if for some reason no letter was chosen
-        return 'A';
+        return (char)('A' + Random.Range(0,26));
     }
     
     public bool CheckWord(string word)
@@ -127,12 +126,96 @@ public class BlcoksManager : MonoBehaviour
         bool correct = _words.Contains(word);
         if (correct || true)
         {
-            for (int j = 0; j < board.GetLength(1); j++)
+            RemoveWordFromBlocks();
+            FallOfBlocks();
+            for (int i = 0; i < _countNewBlocks.GetLength(0); i++)
             {
-                boardString += board[i, j] + " ";
+                // GameObject[] tempArrayForBlocks = new GameObject[_countNewBlocks[i]];
+                List <GameObject> tempArrayForBlocks = new List<GameObject>();
+                for (int j = 0; j < _countNewBlocks[i]; j++)
+                {
+                    var instantiateBlock = Instantiate(_block, this.transform, false);
+                    instantiateBlock.GetComponent<RectTransform>().anchoredPosition =
+                        new Vector2(-180 + (i * 90), 270 + j * 90);
+                    instantiateBlock.GetComponent<Blocks>().SetPosi(i,-1);
+                    // tempArrayForBlocks[j] = instantiateBlock;
+                    tempArrayForBlocks.Add(instantiateBlock);
+                }
+
+                tempArrayForBlocks.Reverse();
+                for (int j = _countNewBlocks[i] - 1; j >= 0; j--)
+                {
+                    tempArrayForBlocks[j].GetComponent<Blocks>().SetDestPosi(j,i);
+                    _blocks[j, i] = tempArrayForBlocks[j];
+                    var value = GenerateCharacter();
+                    _blocks[j,i].GetComponent<Blocks>().SetChar(value.ToString());
+                    _board[j,i] = value;
+                }
             }
-            boardString += "\n";
+            _countNewBlocks = new[] {0, 0, 0, 0, 0};
         }
-        // Debug.Log(boardString);
+
+        foreach (var b in _blocks)
+        {
+
+            Blocks block = b.GetComponent<Blocks>();
+            if (block.GetPosi()[0] != block.GetDestPosi()[0] || block.GetPosi()[1] != block.GetDestPosi()[1])
+            {
+                block.MoveBlock(new Vector2(_position[block.GetDestPosi()[0], block.GetDestPosi()[1], 0],
+                    _position[block.GetDestPosi()[0], block.GetDestPosi()[1], 1]));
+                block.SetPosi(block.GetDestPosi()[0],block.GetDestPosi()[1]);
+            }
+            
+        }
+        return correct;
+    }
+    
+    private void RemoveWordFromBlocks()
+    {
+        List<GameObject> selected = transform.GetChild(0).GetComponent<Blocks>().GetSelected();
+        foreach (var selectedBlock in selected)
+        {
+            Destroy(selectedBlock);
+            int[] posi = selectedBlock.GetComponent<Blocks>().GetPosi();
+            _blocks[posi[0], posi[1]] = null;
+            _countNewBlocks[posi[1]] += 1;
+        }
+    }
+    
+    private void FallOfBlocks()
+    {
+        for (int i = 0; i < _board.GetLength(0); i++)
+        {
+            for (int j = 0; j < _board.GetLength(1); j++)
+            {
+                if (_blocks[i, j] == null)
+                {
+                    for (int z = i; z > 0; z--)
+                    {
+                        _blocks[z,j] = _blocks[z - 1, j];
+                        _blocks[z - 1, j] = null;
+                        _board[z,j] = _board[z - 1, j];
+                        if (_blocks[z, j] != null)
+                            _blocks[z, j].GetComponent<Blocks>().SetDestPosi(z, j);
+                    }
+                }
+            }
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            string boardString = "";
+            for (int i = 0; i < _board.GetLength(0); i++)
+            {
+                for (int j = 0; j < _board.GetLength(1); j++)
+                {
+                    boardString += _board[i, j] + " ";
+                }
+                boardString += "\n";
+            }
+        }
     }
 }
