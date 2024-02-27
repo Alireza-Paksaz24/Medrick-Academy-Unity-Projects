@@ -1,14 +1,16 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using TMPro;
 using Random = UnityEngine.Random;
 
 public class BlcoksManager : MonoBehaviour
 {
+    public TextAsset englishWordsFile;
     private int[] _countNewBlocks = new []{0,0,0,0,0};
-    private string[] _words = { "ABCD","C","A","B","D","E","F","G","H","I","J","K","L","N","O","P","Q","R","S" ,"W"};
+    private string[] _words = { "TEST"};
     private char[,] _board = new char[5, 5];
     private int[,,] _position =
     {
@@ -18,13 +20,22 @@ public class BlcoksManager : MonoBehaviour
         {{-180,-90} ,{-90,-90} ,{0,-90} ,{90,-90} ,{180,-90}},
         {{-180,-180},{-90,-180},{0,-180},{90,-180},{180,-180}}
     };
-    
+    // Dictionary to store frequencies of each letter
+    private Dictionary<char, int> letterFrequencies = new Dictionary<char, int>()
+    {
+        {'A', 8167}, {'B', 1492}, {'C', 2782}, {'D', 4253}, {'E', 12702},
+        {'F', 2228}, {'G', 2015}, {'H', 6094}, {'I', 6966}, {'J', 153},
+        {'K', 772}, {'L', 4025}, {'M', 2406}, {'N', 6749}, {'O', 7507},
+        {'P', 1929}, {'Q', 95}, {'R', 5987}, {'S', 6327}, {'T', 9056},
+        {'U', 2758}, {'V', 978}, {'W', 2360}, {'X', 150}, {'Y', 1974},
+        {'Z', 74}
+    };
     private GameObject[,] _blocks = new GameObject[5,5]; 
     
     [SerializeField] private GameObject _block;
 
     void Start()
-    { 
+    {
         // Select a random word with less than 25 characters
         string chosenWord = _words[Random.Range(0,_words.Length)];
         Debug.Log(chosenWord);
@@ -118,19 +129,66 @@ public class BlcoksManager : MonoBehaviour
 
     private char GenerateCharacter()
     {
-        return (char)('A' + Random.Range(0,26));
+        // Calculate total frequency
+        int totalFrequency = 0;
+        foreach (int frequency in letterFrequencies.Values)
+        {
+            totalFrequency += frequency;
+        }
+
+        // Generate a random number within the total frequency
+        int randomIndex = Random.Range(0, totalFrequency);
+
+        // Iterate through the frequencies to find the corresponding letter
+        int cumulativeFrequency = 0;
+        foreach (KeyValuePair<char, int> pair in letterFrequencies)
+        {
+            cumulativeFrequency += pair.Value;
+            if (randomIndex < cumulativeFrequency)
+            {
+                return pair.Key;
+            }
+        }
+
+        // Default return value (should never happen)
+        return 'A';
     }
     
+    private bool SearchWord(string word)
+    {
+        // Ensure that the TextAsset is assigned
+        if (englishWordsFile != null)
+        {
+            // Split the text file content into an array of lines
+            string[] words = englishWordsFile.text.Split('\n');
+
+            // Iterate over each word and check if it matches the input word
+            foreach (string w in words)
+            {
+                // Perform case-insensitive comparison
+                if (string.Equals(w.Trim(), word, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    return true; // Word exists
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("English words file is not assigned!");
+        }
+
+        return false; // Word does not exist or file is not assigned
+    }
     public bool CheckWord(string word)
     {
-        bool correct = _words.Contains(word);
-        if (correct || true)
+        // bool correct = _words.Contains(word);
+        bool correct = SearchWord(word.ToLower());
+        if (correct)
         {
             RemoveWordFromBlocks();
             FallOfBlocks();
             for (int i = 0; i < _countNewBlocks.GetLength(0); i++)
             {
-                // GameObject[] tempArrayForBlocks = new GameObject[_countNewBlocks[i]];
                 List <GameObject> tempArrayForBlocks = new List<GameObject>();
                 for (int j = 0; j < _countNewBlocks[i]; j++)
                 {
