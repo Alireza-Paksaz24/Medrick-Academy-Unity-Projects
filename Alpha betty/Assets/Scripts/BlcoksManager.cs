@@ -88,10 +88,44 @@ public class BlcoksManager : MonoBehaviour
         }
     }
 
-    void PrintBoard(char[,] board)
+    private static Dictionary<char, int> letterFrequencies = new Dictionary<char, int>()
     {
-        string boardString = "";
-        for (int i = 0; i < board.GetLength(0); i++)
+        {'E', 21912}, {'T', 16587}, {'A', 14810}, {'O', 14003}, {'I', 13318}, {'N', 12666}, {'S', 11450}, {'R', 10977}, 
+        {'H', 10795}, {'D', 7874}, {'L', 7253}, {'U', 5246}, {'C', 4943}, {'M', 4761}, {'F', 4200}, {'Y', 3853}, 
+        {'W', 3819}, {'G', 3693}, {'P', 3316}, {'B', 2715}, {'V', 2019}, {'K', 1257}, {'X', 315}, {'Q', 205}, {'J', 188}, 
+        {'Z', 128}
+    };
+
+    private char GenerateCharacter()
+    {
+        // Compute total weight
+        int totalWeight = 0;
+        foreach (var pair in letterFrequencies)
+        {
+            totalWeight += pair.Value;
+        }
+
+        // Generate a random number within the total weight range
+        int randomNum = Random.Range(0,totalWeight);
+
+        // Find the corresponding letter based on the random number
+        foreach (var pair in letterFrequencies)
+        {
+            randomNum -= pair.Value;
+            if (randomNum < 0)
+            {
+                return pair.Key;
+            }
+        }
+
+        // Default to 'A' if for some reason no letter was chosen
+        return 'A';
+    }
+    
+    public bool CheckWord(string word)
+    {
+        bool correct = _words.Contains(word);
+        if (correct || true)
         {
             for (int j = 0; j < board.GetLength(1); j++)
             {
