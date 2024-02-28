@@ -154,8 +154,10 @@ public class BlcoksManager : MonoBehaviour
         return 'A';
     }
     
-    private bool SearchWord(string word)
+    public bool SearchWord(string word)
     {
+        if (word.Length <= 2)
+            return false;
         // Ensure that the TextAsset is assigned
         if (englishWordsFile != null)
         {

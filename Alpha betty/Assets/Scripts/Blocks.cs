@@ -102,10 +102,23 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
     
     private void SelectBlock()
     {
-        blockImageComponent.color = Color.green;
+        blockImageComponent.color = Color.red;
         _selected.Add(this.gameObject);
         word += character.ToString();
+        CheckWord(word);
         _isSelected = true;
+    }
+
+    private void CheckWord(string word)
+    {
+        Color color = Color.red;;
+        if (_blockManager.SearchWord(word))
+            color = Color.green;
+        foreach (var block in _selected)
+        {
+            block.GetComponent<Image>().color = color;
+        }
+        
     }
 
     public void Release()
