@@ -3294,4 +3294,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09829b3999e34605872b58c23229a5a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  englishWordsFile: {fileID: 4900000, guid: 2d5f0e2287cacfc44a06efe5339cfcc5, type: 3}
   _block: {fileID: 8542849805635521520, guid: 5f67ac92f7db2754eb7f526482d2c2af, type: 3}
