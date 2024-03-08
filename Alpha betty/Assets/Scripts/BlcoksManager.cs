@@ -10,7 +10,8 @@ public class BlcoksManager : MonoBehaviour
 {
     public TextAsset englishWordsFile;
     private int[] _countNewBlocks = new []{0,0,0,0,0};
-    private string[] _words = { "TEST"};
+    // Split the text file content into an array of lines
+    private string[] _words;
     private char[,] _board = new char[5, 5];
     private int[,,] _position =
     {
@@ -36,8 +37,11 @@ public class BlcoksManager : MonoBehaviour
 
     void Start()
     {
+        _words = englishWordsFile.text.Split('\n');
         // Select a random word with less than 25 characters
         string chosenWord = _words[Random.Range(0,_words.Length)];
+        chosenWord = chosenWord.Replace("\r","");
+        chosenWord = chosenWord.ToUpper();
         Debug.Log(chosenWord);
         // Try to place the word
         if (!PlaceWordInBoard(_board, chosenWord))
@@ -161,11 +165,8 @@ public class BlcoksManager : MonoBehaviour
         // Ensure that the TextAsset is assigned
         if (englishWordsFile != null)
         {
-            // Split the text file content into an array of lines
-            string[] words = englishWordsFile.text.Split('\n');
-
             // Iterate over each word and check if it matches the input word
-            foreach (string w in words)
+            foreach (string w in _words)
             {
                 // Perform case-insensitive comparison
                 if (string.Equals(w.Trim(), word, System.StringComparison.OrdinalIgnoreCase))
