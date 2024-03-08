@@ -182,6 +182,7 @@ public class BlcoksManager : MonoBehaviour
 
         return false; // Word does not exist or file is not assigned
     }
+    
     public bool CheckWord(string word)
     {
         // bool correct = _words.Contains(word);

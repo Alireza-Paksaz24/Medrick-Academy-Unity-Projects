@@ -1,3 +1,13 @@
 fileFormatVersion: 2
 guid: 09829b3999e34605872b58c23229a5a7
-timeCreated: 1708698949
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - englishWordsFile: {instanceID: 0}
+  - _block: {fileID: 8542849805635521520, guid: 5f67ac92f7db2754eb7f526482d2c2af, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

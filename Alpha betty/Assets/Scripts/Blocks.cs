@@ -87,6 +87,7 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
             _selected.Remove(_currentBlock);
             _currentBlock.GetComponent<Blocks>().Release();
             _currentBlock = this.gameObject;
+            CheckWord(word);
         }
         if (_isClicked && !_isSelected)
         {
