@@ -61,7 +61,13 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
         {
             BlockStatusChange(true);
             _isClicked = false;
-            _blockManager.CheckWord(word);
+            if (!_blockManager.CheckWord(word))
+            {
+                foreach (var block in _selected)
+                {
+                    block.GetComponent<Blocks>().ShakeAnimation(0);
+                }
+            }
             foreach (var block in _selected)
             {
                 block.GetComponent<Blocks>().Release();
@@ -156,5 +162,26 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
         RectTransform rectTransform = this.GetComponent<RectTransform>();
         float time = (rectTransform.anchoredPosition.y - newPosition.y)/180;
         rectTransform.DOAnchorPos(newPosition, time).SetEase(Ease.InOutSine);
+    }
+
+    public void ShakeAnimation(int level)
+    {
+        RectTransform rectTransform = this.GetComponent<RectTransform>();
+        int range = 0;
+        switch (level)
+        {
+            case 0:
+                range = 5;
+                break;
+            case 1:
+                range = -10;
+                break;
+            case 2:
+                range = 5;
+                break;
+            case 3:
+                return;
+        }
+        rectTransform.DOAnchorPos(rectTransform.anchoredPosition + new Vector2(range,0), 0.1f).SetEase(Ease.InOutSine).OnComplete(() => ShakeAnimation(level+1));
     }
 }

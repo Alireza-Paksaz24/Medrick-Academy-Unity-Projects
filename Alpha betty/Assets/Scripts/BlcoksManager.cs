@@ -185,7 +185,6 @@ public class BlcoksManager : MonoBehaviour
     
     public bool CheckWord(string word)
     {
-        // bool correct = _words.Contains(word);
         bool correct = SearchWord(word.ToLower());
         if (correct)
         {
@@ -200,7 +199,6 @@ public class BlcoksManager : MonoBehaviour
                     instantiateBlock.GetComponent<RectTransform>().anchoredPosition =
                         new Vector2(-180 + (i * 90), 270 + j * 90);
                     instantiateBlock.GetComponent<Blocks>().SetPosi(i,-1);
-                    // tempArrayForBlocks[j] = instantiateBlock;
                     tempArrayForBlocks.Add(instantiateBlock);
                 }
 
