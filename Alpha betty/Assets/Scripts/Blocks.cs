@@ -104,6 +104,7 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
                 _previuseBlock = _currentBlock;
             }
             _currentBlock = this.gameObject;
+            
         }
     }
     
@@ -114,6 +115,7 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
         word += character.ToString();
         CheckWord(word);
         _isSelected = true;
+        _blockManager.TypeInMachine(word);
     }
 
     private void CheckWord(string word)

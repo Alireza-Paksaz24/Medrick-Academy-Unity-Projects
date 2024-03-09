@@ -34,6 +34,7 @@ public class BlcoksManager : MonoBehaviour
     private GameObject[,] _blocks = new GameObject[5,5]; 
     
     [SerializeField] private GameObject _block;
+    [SerializeField] private TypingMachine _typingMachine;
 
     void Start()
     {
@@ -186,6 +187,7 @@ public class BlcoksManager : MonoBehaviour
     public bool CheckWord(string word)
     {
         bool correct = SearchWord(word.ToLower());
+        _typingMachine.Confirm(correct);
         if (correct)
         {
             RemoveWordFromBlocks();
@@ -263,19 +265,23 @@ public class BlcoksManager : MonoBehaviour
         }
     }
 
-    void Update()
+    public void TypeInMachine(string word)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            string boardString = "";
-            for (int i = 0; i < _board.GetLength(0); i++)
-            {
-                for (int j = 0; j < _board.GetLength(1); j++)
-                {
-                    boardString += _board[i, j] + " ";
-                }
-                boardString += "\n";
-            }
-        }
+        _typingMachine.InputWord(word);
     }
+    // void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.Space))
+    //     {
+    //         string boardString = "";
+    //         for (int i = 0; i < _board.GetLength(0); i++)
+    //         {
+    //             for (int j = 0; j < _board.GetLength(1); j++)
+    //             {
+    //                 boardString += _board[i, j] + " ";
+    //             }
+    //             boardString += "\n";
+    //         }
+    //     }
+    // }
 }
