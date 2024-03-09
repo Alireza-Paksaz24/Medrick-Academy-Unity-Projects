@@ -132,7 +132,7 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
     {
         _nextBlock = null;
         _previuseBlock = null;
-        this.GetComponent<Image>().color = Color.white;
+        this.GetComponent<Image>().color = new Color(0.459f,0.412f,0.43f);
         _isSelected = false;
         string temp = word.Substring(0, word.Length - 1);
         word = temp;
