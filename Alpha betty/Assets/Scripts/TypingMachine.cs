@@ -5,7 +5,7 @@ using UnityEngine;
 public class TypingMachine : MonoBehaviour
 {
 
-    private string _text = "";
+    private string _text = " ";
     private string _tempWord = "";
     
     [SerializeField] private TextMeshProUGUI _textGameObject;

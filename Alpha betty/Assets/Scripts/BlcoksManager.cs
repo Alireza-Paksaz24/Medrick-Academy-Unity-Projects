@@ -15,12 +15,13 @@ public class BlcoksManager : MonoBehaviour
     private char[,] _board = new char[5, 5];
     private int[,,] _position =
     {
-        {{-180,180} ,{-90,180} ,{0,180} ,{90,180} ,{180,180}},
-        {{-180,90}  ,{-90,90}  ,{0,90}  ,{90,90}  ,{180,90}},
-        {{-180,0}   ,{-90,0}   ,{0,0}   ,{90,0}   ,{180,0}}, 
-        {{-180,-90} ,{-90,-90} ,{0,-90} ,{90,-90} ,{180,-90}},
-        {{-180,-180},{-90,-180},{0,-180},{90,-180},{180,-180}}
+        {{-306, 306}, {-153, 306}, {0, 306}, {153, 306}, {306, 306}},
+        {{-306, 153}, {-153, 153}, {0, 153}, {153, 153}, {306, 153}},
+        {{-306, 0},   {-153, 0},   {0, 0},   {153, 0},   {306, 0}},
+        {{-306, -153},{-153, -153},{0, -153},{153, -153},{306, -153}},
+        {{-306, -306},{-153, -306},{0, -306},{153, -306},{306, -306}}
     };
+
     // Dictionary to store frequencies of each letter
     private Dictionary<char, int> letterFrequencies = new Dictionary<char, int>()
     {
@@ -199,7 +200,7 @@ public class BlcoksManager : MonoBehaviour
                 {
                     var instantiateBlock = Instantiate(_block, this.transform, false);
                     instantiateBlock.GetComponent<RectTransform>().anchoredPosition =
-                        new Vector2(-180 + (i * 90), 270 + j * 90);
+                        new Vector2(-306 + (i * 153), 459 + j * 153);
                     instantiateBlock.GetComponent<Blocks>().SetPosi(i,-1);
                     tempArrayForBlocks.Add(instantiateBlock);
                 }
