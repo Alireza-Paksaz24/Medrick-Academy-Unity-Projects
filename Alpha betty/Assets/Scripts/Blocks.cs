@@ -94,6 +94,7 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
             _currentBlock.GetComponent<Blocks>().Release();
             _currentBlock = this.gameObject;
             CheckWord(word);
+            _blockManager.TypeInMachine(word);
         }
         if (_isClicked && !_isSelected)
         {
