@@ -29,6 +29,6 @@ public class ButtonControl : MonoBehaviour
 
     private void RefreshBoard()
     {
-        
+        GameObject.Find("Block_Panel").GetComponent<BlcoksManager>().Shuffle2DArray();
     }
 }

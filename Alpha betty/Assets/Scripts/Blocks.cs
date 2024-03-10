@@ -163,7 +163,7 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
     public void MoveBlock(Vector2 newPosition)
     {
         RectTransform rectTransform = this.GetComponent<RectTransform>();
-        float time = (rectTransform.anchoredPosition.y - newPosition.y)/180;
+        float time = (rectTransform.anchoredPosition.y - newPosition.y)/306;
         rectTransform.DOAnchorPos(newPosition, time).SetEase(Ease.InOutSine);
     }
 

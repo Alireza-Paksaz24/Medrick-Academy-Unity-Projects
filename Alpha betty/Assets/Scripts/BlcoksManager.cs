@@ -218,18 +218,7 @@ public class BlcoksManager : MonoBehaviour
             _countNewBlocks = new[] {0, 0, 0, 0, 0};
         }
 
-        foreach (var b in _blocks)
-        {
-
-            Blocks block = b.GetComponent<Blocks>();
-            if (block.GetPosi()[0] != block.GetDestPosi()[0] || block.GetPosi()[1] != block.GetDestPosi()[1])
-            {
-                block.MoveBlock(new Vector2(_position[block.GetDestPosi()[0], block.GetDestPosi()[1], 0],
-                    _position[block.GetDestPosi()[0], block.GetDestPosi()[1], 1]));
-                block.SetPosi(block.GetDestPosi()[0],block.GetDestPosi()[1]);
-            }
-            
-        }
+        MoveBlocks();
         return correct;
     }
     
@@ -272,8 +261,10 @@ public class BlcoksManager : MonoBehaviour
     }
     // void Update()
     // {
+    //     
     //     if (Input.GetKeyDown(KeyCode.Space))
     //     {
+    //         Shuffle2DArray();
     //         string boardString = "";
     //         for (int i = 0; i < _board.GetLength(0); i++)
     //         {
@@ -283,6 +274,45 @@ public class BlcoksManager : MonoBehaviour
     //             }
     //             boardString += "\n";
     //         }
+    //         Debug.Log(boardString);
     //     }
     // }
+
+    private void MoveBlocks()
+    {
+        foreach (var b in _blocks)
+        {
+
+            Blocks block = b.GetComponent<Blocks>();
+            if (block.GetPosi()[0] != block.GetDestPosi()[0] || block.GetPosi()[1] != block.GetDestPosi()[1])
+            {
+                block.MoveBlock(new Vector2(_position[block.GetDestPosi()[0], block.GetDestPosi()[1], 0],
+                    _position[block.GetDestPosi()[0], block.GetDestPosi()[1], 1]));
+                block.SetPosi(block.GetDestPosi()[0],block.GetDestPosi()[1]);
+            }
+            
+        }
+    }
+    public void Shuffle2DArray()
+    {
+        int rowCount = _blocks.GetLength(0);
+        int columnCount = _blocks.GetLength(1);
+        
+        for (int row = 0; row < rowCount; row++)
+        {
+            for (int column = 0; column < columnCount; column++)
+            {
+                int randomRow = Random.Range(0,rowCount);
+                int randomColumn = Random.Range(0,columnCount);
+                
+                // Swap elements
+                (_blocks[row, column], _blocks[randomRow, randomColumn]) = (_blocks[randomRow, randomColumn], _blocks[row, column]);
+                (_board[row, column], _board[randomRow, randomColumn]) = (_board[randomRow, randomColumn], _board[row, column]);
+                // Set new position for the swapped elements
+                _blocks[row, column].GetComponent<Blocks>() .SetDestPosi(row, column);
+                _blocks[randomRow, randomColumn].GetComponent<Blocks>().SetDestPosi(randomRow, randomColumn);
+            }
+        }
+        MoveBlocks();
+    }
 }
