@@ -53,7 +53,7 @@ public class BlcoksManager : MonoBehaviour
     void Start()
     {
         
-        _timePanel.DOFillAmount(1f, 30).SetEase(Ease.Linear).OnComplete(() => SceneManager.LoadScene("Game Over"));
+        _timePanel.DOFillAmount(1f, 90).SetEase(Ease.Linear).OnComplete(() => SceneManager.LoadScene("Game Over"));
         _words = englishWordsFile.text.Split('\n');
         // Select a random word with less than 25 characters
         string chosenWord = _words[Random.Range(0,_words.Length)];
@@ -230,6 +230,7 @@ public class BlcoksManager : MonoBehaviour
     {
         bool correct = SearchWord(word.ToLower());
         _typingMachine.Confirm(correct);
+        GameObject.Find("Sound Manager").GetComponent<SoundEffectControl>().OnEnd(correct);
         if (correct)
         {
             StaticValues.words.Add(word);

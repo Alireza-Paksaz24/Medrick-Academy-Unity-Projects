@@ -27,6 +27,11 @@ public class SoundEffectControl : MonoBehaviour
         PlaySound();
     }
 
+    public void setMute(bool isMute)
+    {
+        _mute = isMute;
+    }
+    
     private void PlaySound()
     {
         if (!_mute)
