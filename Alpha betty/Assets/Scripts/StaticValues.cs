@@ -5,5 +5,5 @@ using UnityEngine;
 public static class StaticValues
 {
     public static List<string> words = new List<string>();
-    public static int score = 50;
+    public static int score = 0;
 }

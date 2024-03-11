@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 using System.Text;
 using System.Linq;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
@@ -66,5 +67,12 @@ public class GameOver : MonoBehaviour
         int definitionEndIndex = jsonResponse.IndexOf("\"", definitionStartIndex);
         string definition = jsonResponse.Substring(definitionStartIndex, definitionEndIndex - definitionStartIndex);
         return definition;
+    }
+
+    public void OnPlay()
+    {
+        SceneManager.LoadScene("Scenes/Game");
+        StaticValues.words = new List<string>();
+        StaticValues.score = 0;
     }
 }

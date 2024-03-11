@@ -3,7 +3,10 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using DG.Tweening;
 using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class BlcoksManager : MonoBehaviour
@@ -44,9 +47,13 @@ public class BlcoksManager : MonoBehaviour
     
     [SerializeField] private GameObject _block;
     [SerializeField] private TypingMachine _typingMachine;
-
+    [SerializeField] private TextMeshProUGUI _scoreText;
+    [SerializeField] private Image _timePanel;
+    
     void Start()
     {
+        
+        _timePanel.DOFillAmount(1f, 30).SetEase(Ease.Linear).OnComplete(() => SceneManager.LoadScene("Game Over"));
         _words = englishWordsFile.text.Split('\n');
         // Select a random word with less than 25 characters
         string chosenWord = _words[Random.Range(0,_words.Length)];
@@ -227,6 +234,7 @@ public class BlcoksManager : MonoBehaviour
         {
             StaticValues.words.Add(word);
             StaticValues.score += CalculateWordScore(word);
+            _scoreText.text = "Score: " + Convert.ToString(StaticValues.score);
             RemoveWordFromBlocks();
             FallOfBlocks();
             for (int i = 0; i < _countNewBlocks.GetLength(0); i++)
@@ -295,24 +303,6 @@ public class BlcoksManager : MonoBehaviour
     {
         _typingMachine.InputWord(word);
     }
-    // void Update()
-    // {
-    //     
-    //     if (Input.GetKeyDown(KeyCode.Space))
-    //     {
-    //         Shuffle2DArray();
-    //         string boardString = "";
-    //         for (int i = 0; i < _board.GetLength(0); i++)
-    //         {
-    //             for (int j = 0; j < _board.GetLength(1); j++)
-    //             {
-    //                 boardString += _board[i, j] + " ";
-    //             }
-    //             boardString += "\n";
-    //         }
-    //         Debug.Log(boardString);
-    //     }
-    // }
 
     private void MoveBlocks()
     {
