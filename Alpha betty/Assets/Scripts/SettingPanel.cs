@@ -45,7 +45,7 @@ public class SettingPanel : MonoBehaviour
 
     public void OnDone()
     {
-        
+        Time.timeScale = 1;
         _canvas.SetActive(true);
         _UICanvas.SetActive(true);
         _settingCanvas.SetActive(false);

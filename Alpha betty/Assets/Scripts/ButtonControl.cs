@@ -38,6 +38,7 @@ public class ButtonControl : MonoBehaviour
 
     private void OpenSettingPanel()
     {
+        Time.timeScale = 0;
         _canvas.SetActive(false);
         _UICanvas.SetActive(false);
         _settingCanvas.SetActive(true);
