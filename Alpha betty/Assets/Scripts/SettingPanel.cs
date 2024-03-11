@@ -10,6 +10,8 @@ public class SettingPanel : MonoBehaviour
     [SerializeField] private GameObject _settingCanvas;
     [SerializeField] private GameObject _SFXButton;
     [SerializeField] private GameObject _musicButton;
+    [SerializeField] private GameObject _SFXControler;
+    [SerializeField] private AudioSource _backgroundMusic;
 
     private bool _isSFXAcrive = true;
     private bool _isMusicAcrive = true;
@@ -19,11 +21,13 @@ public class SettingPanel : MonoBehaviour
         {
             Debug.Log("Deactive");
             _SFXButton.GetComponent<Image>().color = Color.red;
+            _SFXControler.GetComponent<SoundEffectControl>().setMute(true);
         }
         else
         {
             Debug.Log("Active");
             _SFXButton.GetComponent<Image>().color = Color.green;
+            _SFXControler.GetComponent<SoundEffectControl>().setMute(false);
         }
         _isSFXAcrive = !_isSFXAcrive;
     }
@@ -34,15 +38,17 @@ public class SettingPanel : MonoBehaviour
         {
             Debug.Log("Deactive");
             _musicButton.GetComponent<Image>().color = Color.red;
+            _backgroundMusic.mute = true;
         }
         else
         {
             Debug.Log("Active");
             _musicButton.GetComponent<Image>().color = Color.green;
+            _backgroundMusic.mute = false;
         }
         _isMusicAcrive = !_isMusicAcrive;
     }
-
+    
     public void OnDone()
     {
         Time.timeScale = 1;

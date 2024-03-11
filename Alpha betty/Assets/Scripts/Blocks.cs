@@ -8,6 +8,7 @@ using TMPro;
 
 public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerUpHandler
 {
+    private SoundEffectControl _soundEffectControl;
     private BlcoksManager _blockManager;
     private int[] _posi = new int[2];
     private int[] _destPosi = new int[2];
@@ -26,6 +27,7 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
     
     private void Start()
     {
+        _soundEffectControl = GameObject.Find("Sound Manager").GetComponent<SoundEffectControl>();
         _blockManager = this.transform.parent.GetComponent<BlcoksManager>();
         blockImageComponent = GetComponent<Image>();
         character = this.gameObject.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text[0];
@@ -98,6 +100,7 @@ public class Blocks : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, 
         }
         if (_isClicked && !_isSelected)
         {
+            _soundEffectControl.OnTyping();
             SelectBlock();
             if (_currentBlock != null)
             {
