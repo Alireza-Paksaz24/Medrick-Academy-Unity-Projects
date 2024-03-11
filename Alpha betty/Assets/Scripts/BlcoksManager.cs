@@ -12,17 +12,20 @@ using Random = UnityEngine.Random;
 public class BlcoksManager : MonoBehaviour
 {
     public TextAsset englishWordsFile;
-    private int[] _countNewBlocks = new []{0,0,0,0,0};
+
+    private int[] _countNewBlocks = new[] {0, 0, 0, 0, 0};
+
     // Split the text file content into an array of lines
     private string[] _words;
     private char[,] _board = new char[5, 5];
+    
     private int[,,] _position =
     {
         {{-306, 306}, {-153, 306}, {0, 306}, {153, 306}, {306, 306}},
         {{-306, 153}, {-153, 153}, {0, 153}, {153, 153}, {306, 153}},
-        {{-306, 0},   {-153, 0},   {0, 0},   {153, 0},   {306, 0}},
-        {{-306, -153},{-153, -153},{0, -153},{153, -153},{306, -153}},
-        {{-306, -306},{-153, -306},{0, -306},{153, -306},{306, -306}}
+        {{-306, 0}, {-153, 0}, {0, 0}, {153, 0}, {306, 0}},
+        {{-306, -153}, {-153, -153}, {0, -153}, {153, -153}, {306, -153}},
+        {{-306, -306}, {-153, -306}, {0, -306}, {153, -306}, {306, -306}}
     };
 
     // Dictionary to store frequencies of each letter
@@ -35,29 +38,30 @@ public class BlcoksManager : MonoBehaviour
         {'U', 2758}, {'V', 978}, {'W', 2360}, {'X', 150}, {'Y', 1974},
         {'Z', 74}
     };
+
     private Dictionary<char, int> _letterScores = new Dictionary<char, int>()
     {
-        {'E', 1}, {'T', 2}, {'A', 3}, {'O', 3}, {'I', 4}, {'N', 4}, 
-        {'S', 5}, {'H', 5}, {'R', 6}, {'D', 6}, {'L', 7}, {'C', 7}, 
+        {'E', 1}, {'T', 2}, {'A', 3}, {'O', 3}, {'I', 4}, {'N', 4},
+        {'S', 5}, {'H', 5}, {'R', 6}, {'D', 6}, {'L', 7}, {'C', 7},
         {'U', 8}, {'M', 8}, {'W', 9}, {'F', 9}, {'G', 10}, {'Y', 10},
-        {'P', 11}, {'B', 11}, {'V', 12}, {'K', 12}, {'J', 13}, {'X', 14}, 
+        {'P', 11}, {'B', 11}, {'V', 12}, {'K', 12}, {'J', 13}, {'X', 14},
         {'Q', 14}, {'Z', 15}
     };
-    private GameObject[,] _blocks = new GameObject[5,5]; 
-    
+
+    private GameObject[,] _blocks = new GameObject[5, 5];
+
     [SerializeField] private GameObject _block;
     [SerializeField] private TypingMachine _typingMachine;
     [SerializeField] private TextMeshProUGUI _scoreText;
     [SerializeField] private Image _timePanel;
-    
+
     void Start()
     {
-        
-        _timePanel.DOFillAmount(1f, 30).SetEase(Ease.Linear).OnComplete(() => SceneManager.LoadScene("Game Over"));
+        _timePanel.DOFillAmount(1f, 90).SetEase(Ease.Linear).OnComplete(() => SceneManager.LoadScene("Game Over"));
         _words = englishWordsFile.text.Split('\n');
         // Select a random word with less than 25 characters
-        string chosenWord = _words[Random.Range(0,_words.Length)];
-        chosenWord = chosenWord.Replace("\r","");
+        string chosenWord = _words[Random.Range(0, _words.Length)];
+        chosenWord = chosenWord.Replace("\r", "");
         chosenWord = chosenWord.ToUpper();
         Debug.Log(chosenWord);
         // Try to place the word
@@ -76,11 +80,11 @@ public class BlcoksManager : MonoBehaviour
         {
             for (int j = 0; j < _position.GetLength(1); j++)
             {
-                int x = _position[i,j, 0];
-                int y = _position[i,j, 1];
-                var instantiateBlock = Instantiate(_block,this.transform,false);
+                int x = _position[i, j, 0];
+                int y = _position[i, j, 1];
+                var instantiateBlock = Instantiate(_block, this.transform, false);
                 instantiateBlock.GetComponent<RectTransform>().anchoredPosition = new Vector2(x, y);
-                _blocks[i,j] = instantiateBlock;
+                _blocks[i, j] = instantiateBlock;
                 instantiateBlock.GetComponent<Blocks>().SetPosi(i, j);
                 instantiateBlock.GetComponent<Blocks>().SetChar(_board[i, j].ToString());
             }
@@ -101,7 +105,7 @@ public class BlcoksManager : MonoBehaviour
 
         while (possiblePositions.Count > 0)
         {
-            int posIndex = Random.Range(0,possiblePositions.Count);
+            int posIndex = Random.Range(0, possiblePositions.Count);
             (int row, int col) = possiblePositions[posIndex];
             possiblePositions.RemoveAt(posIndex);
 
@@ -117,12 +121,14 @@ public class BlcoksManager : MonoBehaviour
     bool PlaceWordFromPosition(char[,] board, string word, int index, int row, int col, bool[,] visited)
     {
         if (index == word.Length) return true;
-        if (row < 0 || col < 0 || row >= board.GetLength(0) || col >= board.GetLength(1) || visited[row, col]) return false;
+        if (row < 0 || col < 0 || row >= board.GetLength(0) || col >= board.GetLength(1) ||
+            visited[row, col]) return false;
 
         visited[row, col] = true;
         board[row, col] = word[index];
 
-        List<(int, int)> directions = new List<(int, int)> { (-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1) };
+        List<(int, int)> directions = new List<(int, int)>
+            {(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)};
         foreach (var (dr, dc) in directions)
         {
             if (PlaceWordFromPosition(board, word, index + 1, row + dr, col + dc, visited))
@@ -135,7 +141,7 @@ public class BlcoksManager : MonoBehaviour
         board[row, col] = '\0';
         return false;
     }
-    
+
     void FillBoard(char[,] board)
     {
         for (int i = 0; i < board.GetLength(0); i++)
@@ -174,7 +180,7 @@ public class BlcoksManager : MonoBehaviour
         // Default return value (should never happen)
         return 'A';
     }
-    
+
     public bool SearchWord(string word)
     {
         if (word.Length <= 2)
@@ -199,6 +205,7 @@ public class BlcoksManager : MonoBehaviour
 
         return false; // Word does not exist or file is not assigned
     }
+
     private int CalculateWordScore(string word)
     {
         int score = 0;
@@ -213,6 +220,7 @@ public class BlcoksManager : MonoBehaviour
                 {
                     letterCounts[letter] = 0;
                 }
+
                 letterCounts[letter]++;
             }
         }
@@ -225,11 +233,12 @@ public class BlcoksManager : MonoBehaviour
 
         return score;
     }
-    
+
     public bool CheckWord(string word)
     {
         bool correct = SearchWord(word.ToLower());
         _typingMachine.Confirm(correct);
+        GameObject.Find("Sound Manager").GetComponent<SoundEffectControl>().OnEnd(correct);
         if (correct)
         {
             StaticValues.words.Add(word);
@@ -239,33 +248,34 @@ public class BlcoksManager : MonoBehaviour
             FallOfBlocks();
             for (int i = 0; i < _countNewBlocks.GetLength(0); i++)
             {
-                List <GameObject> tempArrayForBlocks = new List<GameObject>();
+                List<GameObject> tempArrayForBlocks = new List<GameObject>();
                 for (int j = 0; j < _countNewBlocks[i]; j++)
                 {
                     var instantiateBlock = Instantiate(_block, this.transform, false);
                     instantiateBlock.GetComponent<RectTransform>().anchoredPosition =
                         new Vector2(-306 + (i * 153), 459 + j * 153);
-                    instantiateBlock.GetComponent<Blocks>().SetPosi(i,-1);
+                    instantiateBlock.GetComponent<Blocks>().SetPosi(i, -1);
                     tempArrayForBlocks.Add(instantiateBlock);
                 }
 
                 tempArrayForBlocks.Reverse();
                 for (int j = _countNewBlocks[i] - 1; j >= 0; j--)
                 {
-                    tempArrayForBlocks[j].GetComponent<Blocks>().SetDestPosi(j,i);
+                    tempArrayForBlocks[j].GetComponent<Blocks>().SetDestPosi(j, i);
                     _blocks[j, i] = tempArrayForBlocks[j];
                     var value = GenerateCharacter();
-                    _blocks[j,i].GetComponent<Blocks>().SetChar(value.ToString());
-                    _board[j,i] = value;
+                    _blocks[j, i].GetComponent<Blocks>().SetChar(value.ToString());
+                    _board[j, i] = value;
                 }
             }
+
             _countNewBlocks = new[] {0, 0, 0, 0, 0};
         }
 
         MoveBlocks();
         return correct;
     }
-    
+
     private void RemoveWordFromBlocks()
     {
         List<GameObject> selected = transform.GetChild(0).GetComponent<Blocks>().GetSelected();
@@ -277,7 +287,7 @@ public class BlcoksManager : MonoBehaviour
             _countNewBlocks[posi[1]] += 1;
         }
     }
-    
+
     private void FallOfBlocks()
     {
         for (int i = 0; i < _board.GetLength(0); i++)
@@ -288,9 +298,9 @@ public class BlcoksManager : MonoBehaviour
                 {
                     for (int z = i; z > 0; z--)
                     {
-                        _blocks[z,j] = _blocks[z - 1, j];
+                        _blocks[z, j] = _blocks[z - 1, j];
                         _blocks[z - 1, j] = null;
-                        _board[z,j] = _board[z - 1, j];
+                        _board[z, j] = _board[z - 1, j];
                         if (_blocks[z, j] != null)
                             _blocks[z, j].GetComponent<Blocks>().SetDestPosi(z, j);
                     }
@@ -308,37 +318,39 @@ public class BlcoksManager : MonoBehaviour
     {
         foreach (var b in _blocks)
         {
-
             Blocks block = b.GetComponent<Blocks>();
             if (block.GetPosi()[0] != block.GetDestPosi()[0] || block.GetPosi()[1] != block.GetDestPosi()[1])
             {
                 block.MoveBlock(new Vector2(_position[block.GetDestPosi()[0], block.GetDestPosi()[1], 0],
                     _position[block.GetDestPosi()[0], block.GetDestPosi()[1], 1]));
-                block.SetPosi(block.GetDestPosi()[0],block.GetDestPosi()[1]);
+                block.SetPosi(block.GetDestPosi()[0], block.GetDestPosi()[1]);
             }
-            
         }
     }
+
     public void Shuffle2DArray()
     {
         int rowCount = _blocks.GetLength(0);
         int columnCount = _blocks.GetLength(1);
-        
+
         for (int row = 0; row < rowCount; row++)
         {
             for (int column = 0; column < columnCount; column++)
             {
-                int randomRow = Random.Range(0,rowCount);
-                int randomColumn = Random.Range(0,columnCount);
-                
+                int randomRow = Random.Range(0, rowCount);
+                int randomColumn = Random.Range(0, columnCount);
+
                 // Swap elements
-                (_blocks[row, column], _blocks[randomRow, randomColumn]) = (_blocks[randomRow, randomColumn], _blocks[row, column]);
-                (_board[row, column], _board[randomRow, randomColumn]) = (_board[randomRow, randomColumn], _board[row, column]);
+                (_blocks[row, column], _blocks[randomRow, randomColumn]) =
+                    (_blocks[randomRow, randomColumn], _blocks[row, column]);
+                (_board[row, column], _board[randomRow, randomColumn]) =
+                    (_board[randomRow, randomColumn], _board[row, column]);
                 // Set new position for the swapped elements
-                _blocks[row, column].GetComponent<Blocks>() .SetDestPosi(row, column);
+                _blocks[row, column].GetComponent<Blocks>().SetDestPosi(row, column);
                 _blocks[randomRow, randomColumn].GetComponent<Blocks>().SetDestPosi(randomRow, randomColumn);
             }
         }
+
         MoveBlocks();
     }
 }
