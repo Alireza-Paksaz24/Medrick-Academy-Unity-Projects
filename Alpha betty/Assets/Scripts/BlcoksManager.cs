@@ -32,6 +32,14 @@ public class BlcoksManager : MonoBehaviour
         {'U', 2758}, {'V', 978}, {'W', 2360}, {'X', 150}, {'Y', 1974},
         {'Z', 74}
     };
+    private Dictionary<char, int> _letterScores = new Dictionary<char, int>()
+    {
+        {'E', 1}, {'T', 2}, {'A', 3}, {'O', 3}, {'I', 4}, {'N', 4}, 
+        {'S', 5}, {'H', 5}, {'R', 6}, {'D', 6}, {'L', 7}, {'C', 7}, 
+        {'U', 8}, {'M', 8}, {'W', 9}, {'F', 9}, {'G', 10}, {'Y', 10},
+        {'P', 11}, {'B', 11}, {'V', 12}, {'K', 12}, {'J', 13}, {'X', 14}, 
+        {'Q', 14}, {'Z', 15}
+    };
     private GameObject[,] _blocks = new GameObject[5,5]; 
     
     [SerializeField] private GameObject _block;
@@ -184,6 +192,32 @@ public class BlcoksManager : MonoBehaviour
 
         return false; // Word does not exist or file is not assigned
     }
+    private int CalculateWordScore(string word)
+    {
+        int score = 0;
+        Dictionary<char, int> letterCounts = new Dictionary<char, int>();
+
+        // Count the occurrence of each letter in the word
+        foreach (char letter in word.ToUpper())
+        {
+            if (_letterScores.ContainsKey(letter))
+            {
+                if (!letterCounts.ContainsKey(letter))
+                {
+                    letterCounts[letter] = 0;
+                }
+                letterCounts[letter]++;
+            }
+        }
+
+        // Calculate the score based on the letter scores and their counts
+        foreach (var letterCount in letterCounts)
+        {
+            score += _letterScores[letterCount.Key] * letterCount.Value;
+        }
+
+        return score;
+    }
     
     public bool CheckWord(string word)
     {
@@ -191,6 +225,8 @@ public class BlcoksManager : MonoBehaviour
         _typingMachine.Confirm(correct);
         if (correct)
         {
+            StaticValues.words.Add(word);
+            StaticValues.score += CalculateWordScore(word);
             RemoveWordFromBlocks();
             FallOfBlocks();
             for (int i = 0; i < _countNewBlocks.GetLength(0); i++)
